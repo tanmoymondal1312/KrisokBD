@@ -85,28 +85,28 @@
 
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
 
-            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
+            <a href="{% url 'market:daily_prices' %}" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
                 <div class="w-14 h-14 mx-auto bg-primary-50 group-hover:bg-primary-100 rounded-xl flex items-center justify-center mb-3 transition">
                     <i class="fas fa-tags text-2xl text-primary-600"></i>
                 </div>
                 <h4 class="font-semibold text-gray-800 text-sm leading-tight">আজকের পাইকারি বাজার দর</h4>
             </a>
 
-            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
+            <a href="{% url 'market:division_prices' %}" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
                 <div class="w-14 h-14 mx-auto bg-blue-50 group-hover:bg-blue-100 rounded-xl flex items-center justify-center mb-3 transition">
                     <i class="fas fa-map-marker-alt text-2xl text-blue-600"></i>
                 </div>
                 <h4 class="font-semibold text-gray-800 text-sm leading-tight">বিভাগ ও পণ্যভিত্তিক পাইকারি দর</h4>
             </a>
 
-            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
+            <a href="{% url 'market:comparison_chart' %}" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
                 <div class="w-14 h-14 mx-auto bg-amber-50 group-hover:bg-amber-100 rounded-xl flex items-center justify-center mb-3 transition">
                     <i class="fas fa-chart-bar text-2xl text-amber-600"></i>
                 </div>
                 <h4 class="font-semibold text-gray-800 text-sm leading-tight">তুলনামূলক তথ্যচিত্র</h4>
             </a>
 
-            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
+            <a href="{% url 'market:regional_graph' %}" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
                 <div class="w-14 h-14 mx-auto bg-purple-50 group-hover:bg-purple-100 rounded-xl flex items-center justify-center mb-3 transition">
                     <i class="fas fa-chart-area text-2xl text-purple-600"></i>
                 </div>
@@ -167,71 +167,54 @@
                     <i class="fas fa-clock mr-1"></i> সর্বশেষ আপডেট: <span class="text-primary-600 font-medium">আপডেট চলছে...</span>
                 </p>
             </div>
-            <a href="#" class="px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition">
+            <a href="{% url 'market:daily_prices' %}" class="px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition">
                 সব দেখুন <i class="fas fa-arrow-right ml-1"></i>
             </a>
         </div>
 
-        <!-- Smart Fallback Notice -->
+        {% if not is_today %}
         <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 flex items-start gap-3">
-            <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center shrink-0 mt-0.5">
+            <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center shrink-0">
                 <i class="fas fa-sync-alt text-amber-600 animate-spin"></i>
             </div>
             <div>
                 <p class="text-sm font-medium text-amber-800">আজকের ডেটা আপডেট হচ্ছে</p>
-                <p class="text-xs text-amber-600 mt-0.5">সর্বশেষ আপডেটেড বাজার দর দেখানো হচ্ছে। নতুন ডেটা আসলে স্বয়ংক্রিয়ভাবে আপডেট হবে।</p>
+                <p class="text-xs text-amber-600 mt-0.5">সর্বশেষ আপডেটেড বাজার দর ({{ price_date|date:"d M, Y" }}) দেখানো হচ্ছে।</p>
             </div>
         </div>
+        {% endif %}
 
-        <!-- Price Table -->
         <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
             <div class="overflow-x-auto">
                 <table class="w-full">
                     <thead>
                         <tr class="bg-primary-700 text-white">
                             <th class="px-4 py-3 text-left text-sm font-semibold">পণ্যের নাম</th>
-                            <th class="px-4 py-3 text-left text-sm font-semibold">পণ্যের ধরণ</th>
-                            <th class="px-4 py-3 text-center text-sm font-semibold">সর্বনিম্ন মূল্য (৳)</th>
-                            <th class="px-4 py-3 text-center text-sm font-semibold">সর্বোচ্চ মূল্য (৳)</th>
-                            <th class="px-4 py-3 text-center text-sm font-semibold">সরকারি মূল্য (৳)</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold">ধরণ</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold">সর্বনিম্ন (৳)</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold">সর্বোচ্চ (৳)</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold">সরকারি (৳)</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-4 py-3 text-sm font-medium">পেঁয়াজ</td>
-                            <td class="px-4 py-3 text-sm text-gray-500">দেশি</td>
-                            <td class="px-4 py-3 text-center text-sm">৳ ৩৫</td>
-                            <td class="px-4 py-3 text-center text-sm">৳ ৪৫</td>
-                            <td class="px-4 py-3 text-center text-sm text-gray-400">৳ ৪০</td>
+                        {% for item in recent_prices %}
+                        <tr class="hover:bg-gray-50 transition {% if forloop.counter|divisibleby:2 %}bg-gray-50/50{% endif %}">
+                            <td class="px-4 py-3">
+                                <span class="text-sm font-medium">{{ item.product.name }}</span>
+                                <span class="text-xs text-gray-400 block">{{ item.product.name_en }}</span>
+                            </td>
+                            <td class="px-4 py-3 text-sm text-gray-500">{{ item.product_type }}</td>
+                            <td class="px-4 py-3 text-center text-sm font-medium text-green-700">৳ {{ item.min_price|floatformat:0 }}</td>
+                            <td class="px-4 py-3 text-center text-sm font-medium text-red-600">৳ {{ item.max_price|floatformat:0 }}</td>
+                            <td class="px-4 py-3 text-center text-sm text-gray-400">
+                                {% if item.govt_price %}৳ {{ item.govt_price|floatformat:0 }}{% else %}—{% endif %}
+                            </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 transition bg-gray-50/50">
-                            <td class="px-4 py-3 text-sm font-medium">আলু</td>
-                            <td class="px-4 py-3 text-sm text-gray-500">দেশি</td>
-                            <td class="px-4 py-3 text-center text-sm">৳ ২০</td>
-                            <td class="px-4 py-3 text-center text-sm">৳ ৩০</td>
-                            <td class="px-4 py-3 text-center text-sm text-gray-400">৳ ২৫</td>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="px-4 py-8 text-center text-gray-400">কোনো দর পাওয়া যায়নি</td>
                         </tr>
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-4 py-3 text-sm font-medium">রসুন</td>
-                            <td class="px-4 py-3 text-sm text-gray-500">দেশি</td>
-                            <td class="px-4 py-3 text-center text-sm">৳ ১৮০</td>
-                            <td class="px-4 py-3 text-center text-sm">৳ ২২০</td>
-                            <td class="px-4 py-3 text-center text-sm text-gray-400">৳ ২০০</td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 transition bg-gray-50/50">
-                            <td class="px-4 py-3 text-sm font-medium">আদা</td>
-                            <td class="px-4 py-3 text-sm text-gray-500">দেশি</td>
-                            <td class="px-4 py-3 text-center text-sm">৳ ২৪০</td>
-                            <td class="px-4 py-3 text-center text-sm">৳ ৩০০</td>
-                            <td class="px-4 py-3 text-center text-sm text-gray-400">—</td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-4 py-3 text-sm font-medium">মরিচ (কাঁচা)</td>
-                            <td class="px-4 py-3 text-sm text-gray-500">দেশি</td>
-                            <td class="px-4 py-3 text-center text-sm">৳ ৬০</td>
-                            <td class="px-4 py-3 text-center text-sm">৳ ৮০</td>
-                            <td class="px-4 py-3 text-center text-sm text-gray-400">—</td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -248,14 +231,14 @@
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {% for market in popular_markets %}
-            <a href="#" class="group bg-white rounded-xl p-4 flex items-center gap-3 shadow-sm hover:shadow-lg border border-gray-100 hover:border-primary-300 transition-all duration-300">
+            {% for pm in popular_markets %}
+            <a href="{% url 'market:market_detail' pm.market.slug %}" class="group bg-white rounded-xl p-4 flex items-center gap-3 shadow-sm hover:shadow-lg border border-gray-100 hover:border-primary-300 transition-all duration-300">
                 <div class="w-10 h-10 bg-primary-100 group-hover:bg-primary-200 rounded-lg flex items-center justify-center shrink-0 transition">
                     <i class="fas fa-store text-primary-600"></i>
                 </div>
                 <div class="min-w-0">
-                    <h4 class="font-semibold text-gray-800 text-sm truncate">{{ market.name }}</h4>
-                    <p class="text-xs text-gray-400">{{ market.location }}</p>
+                    <h4 class="font-semibold text-gray-800 text-sm truncate">{{ pm.market.name }}</h4>
+                    <p class="text-xs text-gray-400">{{ pm.market.district.division.name }}</p>
                 </div>
                 <i class="fas fa-chevron-right text-gray-300 group-hover:text-primary-500 ml-auto text-xs transition"></i>
             </a>

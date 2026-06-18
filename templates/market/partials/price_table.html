@@ -1,0 +1,51 @@
+<div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead>
+                <tr class="bg-primary-700 text-white">
+                    <th class="px-4 py-3 text-left text-sm font-semibold">পণ্যের নাম</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">ধরণ</th>
+                    <th class="px-4 py-3 text-center text-sm font-semibold">সর্বনিম্ন (৳)</th>
+                    <th class="px-4 py-3 text-center text-sm font-semibold">সর্বোচ্চ (৳)</th>
+                    <th class="px-4 py-3 text-center text-sm font-semibold">সরকারি (৳)</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for item in prices %}
+                <tr class="hover:bg-gray-50 transition {% if forloop.counter|divisibleby:2 %}bg-gray-50/50{% endif %}">
+                    <td class="px-4 py-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-primary-400 rounded-full"></span>
+                            <span class="text-sm font-medium text-gray-800">{{ item.product.name }}</span>
+                        </div>
+                        <span class="text-xs text-gray-400 ml-4">{{ item.product.name_en }}</span>
+                    </td>
+                    <td class="px-4 py-3 text-sm text-gray-500">{{ item.product_type }}</td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="text-sm font-medium text-green-700">৳ {{ item.min_price|floatformat:0 }}</span>
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="text-sm font-medium text-red-600">৳ {{ item.max_price|floatformat:0 }}</span>
+                    </td>
+                    <td class="px-4 py-3 text-center text-sm text-gray-400">
+                        {% if item.govt_price %}৳ {{ item.govt_price|floatformat:0 }}{% else %}—{% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="px-4 py-8 text-center text-gray-400">
+                        <i class="fas fa-inbox text-3xl mb-2 block"></i>
+                        এই ফিল্টারে কোনো ডেটা পাওয়া যায়নি
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if prices %}
+    <div class="px-4 py-3 bg-gray-50 border-t text-xs text-gray-400 flex justify-between">
+        <span>মোট {{ prices|length }} টি পণ্য</span>
+        <span>{{ price_date|date:"d M, Y" }} তারিখের দর</span>
+    </div>
+    {% endif %}
+</div>

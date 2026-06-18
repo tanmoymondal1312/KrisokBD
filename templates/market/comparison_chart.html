@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}তুলনামূলক তথ্যচিত্র - কৃষক বিডি{% endblock %}
+
+{% block content %}
+<section class="py-8 md:py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800">তুলনামূলক তথ্যচিত্র</h1>
+                <p class="text-gray-500 text-sm mt-1">বিভিন্ন বিভাগের পণ্যের দাম পাশাপাশি তুলনা</p>
+            </div>
+            <a href="{% url 'core:home' %}" class="text-sm text-primary-600 hover:text-primary-700">
+                <i class="fas fa-arrow-left mr-1"></i> হোম
+            </a>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">
+            <label class="block text-xs text-gray-500 mb-1">ক্যাটাগরি নির্বাচন করুন</label>
+            <div class="flex flex-wrap gap-2">
+                {% for cat in categories %}
+                <a href="{% url 'market:comparison_chart' %}?category={{ cat.slug }}"
+                   class="px-4 py-2 rounded-lg text-sm font-medium transition
+                   {% if selected_category == cat.slug %}bg-primary-600 text-white shadow{% else %}bg-gray-100 text-gray-700 hover:bg-primary-50 hover:text-primary-700{% endif %}">
+                    {{ cat.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Chart -->
+        <div id="chart-container" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <div class="mb-4 text-sm text-gray-500">
+                <i class="fas fa-calendar-alt mr-1"></i> {{ price_date|date:"d M, Y" }} তারিখের দর
+            </div>
+            <div class="relative" style="height: 400px;">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const chartData = {{ chart_data|safe }};
+    const colors = [
+        '#16a34a', '#2563eb', '#d97706', '#dc2626', '#7c3aed',
+        '#0d9488', '#e11d48', '#9333ea',
+    ];
+
+    const datasets = chartData.datasets.map((ds, i) => ({
+        label: ds.label,
+        data: ds.data,
+        backgroundColor: colors[i % colors.length] + '33',
+        borderColor: colors[i % colors.length],
+        borderWidth: 2,
+        borderRadius: 4,
+    }));
+
+    new Chart(document.getElementById('comparisonChart'), {
+        type: 'bar',
+        data: { labels: chartData.labels, datasets: datasets },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', labels: { font: { family: "'Noto Sans Bengali', sans-serif" } } },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => `${ctx.dataset.label}: ৳${ctx.raw.toFixed(0)}`
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { callback: v => '৳' + v }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}{{ market.name }} - বাজার দর{% endblock %}
+
+{% block content %}
+<section class="py-8 md:py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800">{{ market.name }}</h1>
+                <p class="text-gray-500 text-sm mt-1">
+                    <i class="fas fa-map-marker-alt mr-1"></i> {{ market.district.name }}, {{ market.district.division.name }}
+                    <span class="ml-2"><i class="fas fa-calendar-alt mr-1"></i> {{ price_date|date:"d M, Y" }}</span>
+                </p>
+            </div>
+            <a href="{% url 'market:daily_prices' %}" class="text-sm text-primary-600 hover:text-primary-700">
+                <i class="fas fa-arrow-left mr-1"></i> সকল বাজার দর
+            </a>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-primary-700 text-white">
+                            <th class="px-4 py-3 text-left text-sm font-semibold">পণ্য</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold">সর্বনিম্ন (৳)</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold">সর্বোচ্চ (৳)</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold">গড় (৳)</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold">সরকারি (৳)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        {% for item in prices %}
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="px-4 py-3">
+                                <span class="text-sm font-medium">{{ item.product.name }}</span>
+                                <span class="text-xs text-gray-400 block">{{ item.product.name_en }} / {{ item.product.unit }}</span>
+                            </td>
+                            <td class="px-4 py-3 text-center text-sm font-medium text-green-700">৳ {{ item.min_price|floatformat:0 }}</td>
+                            <td class="px-4 py-3 text-center text-sm font-medium text-red-600">৳ {{ item.max_price|floatformat:0 }}</td>
+                            <td class="px-4 py-3 text-center text-sm text-gray-600">৳ {{ item.avg_price|floatformat:0 }}</td>
+                            <td class="px-4 py-3 text-center text-sm text-gray-400">
+                                {% if item.govt_price %}৳ {{ item.govt_price|floatformat:0 }}{% else %}—{% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="px-4 py-8 text-center text-gray-400">এই বাজারের কোনো দর পাওয়া যায়নি</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

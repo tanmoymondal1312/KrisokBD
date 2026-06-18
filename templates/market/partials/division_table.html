@@ -1,0 +1,47 @@
+{% if selected_product %}
+<!-- Single Product - All Divisions Comparison -->
+<div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+    <div class="px-4 py-3 bg-primary-50 border-b flex items-center gap-2">
+        <i class="fas fa-balance-scale text-primary-600"></i>
+        <span class="font-semibold text-primary-800">{{ selected_product.name }} ({{ selected_product.name_en }}) — বিভাগভিত্তিক তুলনা</span>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead>
+                <tr class="bg-gray-50">
+                    <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">বিভাগ</th>
+                    <th class="px-4 py-3 text-center text-sm font-semibold text-gray-700">গড় সর্বনিম্ন (৳)</th>
+                    <th class="px-4 py-3 text-center text-sm font-semibold text-gray-700">গড় সর্বোচ্চ (৳)</th>
+                    <th class="px-4 py-3 text-center text-sm font-semibold text-gray-700">সবচেয়ে কম (৳)</th>
+                    <th class="px-4 py-3 text-center text-sm font-semibold text-gray-700">সবচেয়ে বেশি (৳)</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for item in division_data %}
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-4 py-3">
+                        <span class="text-sm font-medium text-gray-800">{{ item.division.name }}</span>
+                        <span class="text-xs text-gray-400 block">{{ item.division.name_en }}</span>
+                    </td>
+                    <td class="px-4 py-3 text-center text-sm font-medium text-green-700">৳ {{ item.avg_min }}</td>
+                    <td class="px-4 py-3 text-center text-sm font-medium text-red-600">৳ {{ item.avg_max }}</td>
+                    <td class="px-4 py-3 text-center text-sm text-green-600">৳ {{ item.lowest|floatformat:0 }}</td>
+                    <td class="px-4 py-3 text-center text-sm text-red-500">৳ {{ item.highest|floatformat:0 }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="px-4 py-8 text-center text-gray-400">এই পণ্যের কোনো দর পাওয়া যায়নি</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<!-- All Products by Division -->
+<div class="text-center py-12 text-gray-400">
+    <i class="fas fa-hand-pointer text-4xl mb-3 block"></i>
+    <p class="text-lg">উপরে একটি পণ্য নির্বাচন করুন</p>
+    <p class="text-sm mt-1">সকল বিভাগের তুলনামূলক দর দেখতে পারবেন</p>
+</div>
+{% endif %}
