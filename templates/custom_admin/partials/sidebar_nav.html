@@ -1,0 +1,43 @@
+{% with current_path=request.path %}
+
+<a href="{% url 'custom_admin:dashboard' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition {% if current_path == '/admin/' %}bg-sidebar-active text-white{% else %}hover:bg-sidebar-hover{% endif %}">
+    <i class="fas fa-tachometer-alt w-5 text-center"></i> ড্যাশবোর্ড
+</a>
+
+<p class="px-3 pt-4 pb-1 text-[10px] uppercase tracking-wider text-gray-500 font-semibold">বাজার</p>
+
+<a href="{% url 'custom_admin:price_list' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition {% if 'prices' in current_path %}bg-sidebar-active text-white{% else %}hover:bg-sidebar-hover{% endif %}">
+    <i class="fas fa-tags w-5 text-center"></i> বাজার দর
+</a>
+<a href="{% url 'custom_admin:product_list' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition {% if 'products' in current_path %}bg-sidebar-active text-white{% else %}hover:bg-sidebar-hover{% endif %}">
+    <i class="fas fa-box w-5 text-center"></i> পণ্য
+</a>
+<a href="{% url 'custom_admin:market_list' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition {% if 'markets' in current_path and 'popular' not in current_path %}bg-sidebar-active text-white{% else %}hover:bg-sidebar-hover{% endif %}">
+    <i class="fas fa-store w-5 text-center"></i> বাজার
+</a>
+<a href="{% url 'custom_admin:division_list' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition {% if 'divisions' in current_path %}bg-sidebar-active text-white{% else %}hover:bg-sidebar-hover{% endif %}">
+    <i class="fas fa-map w-5 text-center"></i> বিভাগ ও জেলা
+</a>
+<a href="{% url 'custom_admin:govt_price_list' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition {% if 'govt-prices' in current_path %}bg-sidebar-active text-white{% else %}hover:bg-sidebar-hover{% endif %}">
+    <i class="fas fa-landmark w-5 text-center"></i> সরকারি মূল্য
+</a>
+<a href="{% url 'custom_admin:popular_market_list' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition {% if 'popular-markets' in current_path %}bg-sidebar-active text-white{% else %}hover:bg-sidebar-hover{% endif %}">
+    <i class="fas fa-star w-5 text-center"></i> জনপ্রিয় বাজার
+</a>
+
+<p class="px-3 pt-4 pb-1 text-[10px] uppercase tracking-wider text-gray-500 font-semibold">কন্টেন্ট</p>
+
+<a href="{% url 'custom_admin:post_list' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition {% if 'posts' in current_path %}bg-sidebar-active text-white{% else %}hover:bg-sidebar-hover{% endif %}">
+    <i class="fas fa-clipboard-list w-5 text-center"></i> ক্রয়-বিক্রয় পোস্ট
+</a>
+<a href="{% url 'custom_admin:video_list' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition {% if 'videos' in current_path %}bg-sidebar-active text-white{% else %}hover:bg-sidebar-hover{% endif %}">
+    <i class="fab fa-youtube w-5 text-center"></i> ভিডিও
+</a>
+
+<p class="px-3 pt-4 pb-1 text-[10px] uppercase tracking-wider text-gray-500 font-semibold">ব্যবহারকারী</p>
+
+<a href="{% url 'custom_admin:user_list' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition {% if 'users' in current_path %}bg-sidebar-active text-white{% else %}hover:bg-sidebar-hover{% endif %}">
+    <i class="fas fa-users w-5 text-center"></i> ব্যবহারকারী
+</a>
+
+{% endwith %}

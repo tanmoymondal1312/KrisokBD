@@ -1,0 +1,33 @@
+{% extends "custom_admin/base.html" %}
+{% block title %}{% if market %}বাজার সম্পাদনা{% else %}বাজার যোগ{% endif %}{% endblock %}
+{% block page_title %}{% if market %}বাজার সম্পাদনা — {{ market.name }}{% else %}নতুন বাজার যোগ{% endif %}{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl">
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+            <div><label class="block text-sm font-medium text-gray-700 mb-1">বাজারের নাম (বাংলা)</label>
+                <input type="text" name="name" value="{{ market.name|default:'' }}" required class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1">ইংরেজি নাম</label>
+                <input type="text" name="name_en" value="{{ market.name_en|default:'' }}" required class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1">Slug</label>
+                <input type="text" name="slug" value="{{ market.slug|default:'' }}" required class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1">জেলা</label>
+                <select name="district" required class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm">
+                    {% for d in districts %}<option value="{{ d.pk }}" {% if market.district_id == d.pk %}selected{% endif %}>{{ d.name }} ({{ d.division.name }})</option>{% endfor %}
+                </select></div>
+            {% if market %}
+            <div class="flex items-center gap-2">
+                <input type="checkbox" name="is_active" id="is_active" {% if market.is_active %}checked{% endif %} class="rounded border-gray-300">
+                <label for="is_active" class="text-sm text-gray-700">সক্রিয়</label>
+            </div>
+            {% endif %}
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="px-6 py-2.5 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition"><i class="fas fa-save mr-1"></i> সংরক্ষণ</button>
+                <a href="{% url 'custom_admin:market_list' %}" class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">বাতিল</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

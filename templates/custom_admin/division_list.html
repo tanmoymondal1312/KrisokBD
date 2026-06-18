@@ -1,0 +1,21 @@
+{% extends "custom_admin/base.html" %}
+{% block title %}বিভাগ ও জেলা{% endblock %}
+{% block page_title %}বিভাগ ও জেলা{% endblock %}
+
+{% block content %}
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for div in divisions %}
+    <div class="bg-white rounded-xl border border-gray-200 p-5">
+        <h3 class="font-semibold text-gray-800 mb-3"><i class="fas fa-map-marker-alt text-primary-500 mr-1"></i> {{ div.name }} <span class="text-gray-400 text-sm">({{ div.name_en }})</span></h3>
+        <ul class="space-y-1.5">
+            {% for dist in div.districts.all %}
+            <li class="text-sm text-gray-600 flex items-center gap-2">
+                <i class="fas fa-circle text-[6px] text-gray-300"></i> {{ dist.name }} <span class="text-gray-400 text-xs">({{ dist.name_en }})</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+<p class="text-xs text-gray-400 mt-4"><i class="fas fa-info-circle mr-1"></i> বিভাগ ও জেলা যোগ/সম্পাদনা করতে <a href="/django-admin/market/division/" class="text-primary-600 underline">Django Admin</a> ব্যবহার করুন।</p>
+{% endblock %}

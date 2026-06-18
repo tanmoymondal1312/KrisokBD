@@ -1,0 +1,35 @@
+{% extends "custom_admin/base.html" %}
+{% block title %}ভিডিও যোগ{% endblock %}
+{% block page_title %}নতুন ভিডিও যোগ করুন{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl">
+    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
+        <p class="text-sm text-amber-800"><i class="fas fa-info-circle mr-1"></i> শুধু YouTube ভিডিওর URL পেস্ট করুন — থাম্বনেইল স্বয়ংক্রিয়ভাবে তৈরি হবে।</p>
+    </div>
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+            <div><label class="block text-sm font-medium text-gray-700 mb-1">YouTube URL</label>
+                <input type="url" name="url" required placeholder="https://youtu.be/xxxxx বা https://youtube.com/watch?v=xxxxx" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1">শিরোনাম</label>
+                <input type="text" name="title" required placeholder="ভিডিওর শিরোনাম" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1">বর্ণনা (ঐচ্ছিক)</label>
+                <textarea name="description" rows="3" placeholder="ভিডিওর সংক্ষিপ্ত বর্ণনা" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></textarea></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1">ক্যাটাগরি</label>
+                <select name="category" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm">
+                    <option value="">-- ক্যাটাগরি (ঐচ্ছিক) --</option>
+                    {% for c in categories %}<option value="{{ c.pk }}">{{ c.name }}</option>{% endfor %}
+                </select></div>
+            <div class="flex items-center gap-2">
+                <input type="checkbox" name="is_featured" id="is_featured" class="rounded border-gray-300">
+                <label for="is_featured" class="text-sm text-gray-700">Featured (হোমপেজে দেখাবে)</label>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="px-6 py-2.5 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition"><i class="fab fa-youtube mr-1"></i> যোগ করুন</button>
+                <a href="{% url 'custom_admin:video_list' %}" class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">বাতিল</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

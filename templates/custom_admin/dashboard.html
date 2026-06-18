@@ -1,0 +1,96 @@
+{% extends "custom_admin/base.html" %}
+
+{% block title %}ড্যাশবোর্ড{% endblock %}
+{% block page_title %}ড্যাশবোর্ড{% endblock %}
+
+{% block content %}
+<!-- Stats Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white rounded-xl border border-gray-200 p-5">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center"><i class="fas fa-users text-blue-600"></i></div>
+            <div><p class="text-2xl font-bold text-gray-800">{{ total_users }}</p><p class="text-xs text-gray-500">মোট ব্যবহারকারী</p></div>
+        </div>
+    </div>
+    <div class="bg-white rounded-xl border border-gray-200 p-5">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center"><i class="fas fa-box text-green-600"></i></div>
+            <div><p class="text-2xl font-bold text-gray-800">{{ total_products }}</p><p class="text-xs text-gray-500">মোট পণ্য</p></div>
+        </div>
+    </div>
+    <div class="bg-white rounded-xl border border-gray-200 p-5">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center"><i class="fas fa-tags text-purple-600"></i></div>
+            <div><p class="text-2xl font-bold text-gray-800">{{ total_prices_today }}</p><p class="text-xs text-gray-500">আজকের দর এন্ট্রি</p></div>
+        </div>
+    </div>
+    <div class="bg-white rounded-xl border border-gray-200 p-5">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center"><i class="fas fa-clock text-amber-600"></i></div>
+            <div><p class="text-2xl font-bold text-gray-800">{{ pending_posts }}</p><p class="text-xs text-gray-500">অপেক্ষমান পোস্ট</p></div>
+        </div>
+    </div>
+</div>
+
+<div class="grid md:grid-cols-2 gap-6">
+    <!-- Recent Users -->
+    <div class="bg-white rounded-xl border border-gray-200">
+        <div class="px-5 py-3 border-b flex items-center justify-between">
+            <h3 class="font-semibold text-gray-800">সাম্প্রতিক ব্যবহারকারী</h3>
+            <a href="{% url 'custom_admin:user_list' %}" class="text-xs text-primary-600 hover:underline">সব দেখুন</a>
+        </div>
+        <div class="divide-y divide-gray-100">
+            {% for u in recent_users %}
+            <div class="px-5 py-3 flex items-center gap-3">
+                <div class="w-8 h-8 bg-primary-100 text-primary-700 rounded-full flex items-center justify-center text-xs font-bold">{{ u.first_name|first|default:u.username|first }}</div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-800 truncate">{{ u.first_name|default:u.username }}{% if u.is_verified %} <i class="fas fa-check-circle text-primary-500 text-xs"></i>{% endif %}</p>
+                    <p class="text-xs text-gray-400">{{ u.get_user_type_display }} • {{ u.date_joined|timesince }} আগে</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Recent Posts -->
+    <div class="bg-white rounded-xl border border-gray-200">
+        <div class="px-5 py-3 border-b flex items-center justify-between">
+            <h3 class="font-semibold text-gray-800">সাম্প্রতিক পোস্ট</h3>
+            <a href="{% url 'custom_admin:post_list' %}" class="text-xs text-primary-600 hover:underline">সব দেখুন</a>
+        </div>
+        <div class="divide-y divide-gray-100">
+            {% for p in recent_posts %}
+            <div class="px-5 py-3 flex items-center justify-between">
+                <div class="min-w-0">
+                    <p class="text-sm font-medium text-gray-800 truncate">{{ p.title }}</p>
+                    <p class="text-xs text-gray-400">{{ p.user.first_name|default:p.user.username }} • {{ p.created_at|timesince }} আগে</p>
+                </div>
+                <span class="px-2 py-0.5 text-xs rounded-full shrink-0 {% if p.status == 'pending' %}bg-amber-100 text-amber-700{% elif p.status == 'approved' %}bg-green-100 text-green-700{% else %}bg-gray-100 text-gray-500{% endif %}">
+                    {{ p.get_status_display }}
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
+    <a href="{% url 'custom_admin:price_add' %}" class="bg-white rounded-xl border border-gray-200 p-4 text-center hover:shadow-md transition">
+        <i class="fas fa-plus-circle text-2xl text-primary-600 mb-2"></i>
+        <p class="text-sm font-medium text-gray-700">দর যোগ করুন</p>
+    </a>
+    <a href="{% url 'custom_admin:product_add' %}" class="bg-white rounded-xl border border-gray-200 p-4 text-center hover:shadow-md transition">
+        <i class="fas fa-box text-2xl text-blue-600 mb-2"></i>
+        <p class="text-sm font-medium text-gray-700">পণ্য যোগ করুন</p>
+    </a>
+    <a href="{% url 'custom_admin:video_add' %}" class="bg-white rounded-xl border border-gray-200 p-4 text-center hover:shadow-md transition">
+        <i class="fab fa-youtube text-2xl text-red-600 mb-2"></i>
+        <p class="text-sm font-medium text-gray-700">ভিডিও যোগ করুন</p>
+    </a>
+    <a href="{% url 'custom_admin:post_list' %}?status=pending" class="bg-white rounded-xl border border-gray-200 p-4 text-center hover:shadow-md transition">
+        <i class="fas fa-check-double text-2xl text-amber-600 mb-2"></i>
+        <p class="text-sm font-medium text-gray-700">পোস্ট অনুমোদন</p>
+    </a>
+</div>
+{% endblock %}
