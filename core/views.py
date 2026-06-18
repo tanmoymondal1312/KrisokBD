@@ -1,8 +1,10 @@
 from datetime import date, timedelta
 from decimal import Decimal
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db.models import Avg, Max, Min
+
+User = get_user_model()
 from django.shortcuts import render
 
 from market.models import (

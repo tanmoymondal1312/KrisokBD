@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}সাবস্ক্রিপশন প্যাকেজ - কৃষক বিডি{% endblock %}
+
+{% block content %}
+<section class="py-12 md:py-16">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">সাবস্ক্রিপশন প্যাকেজ</h1>
+            <p class="text-gray-500 mt-2 max-w-xl mx-auto">আপনার প্রয়োজন অনুযায়ী প্যাকেজ নির্বাচন করুন। সকল প্যাকেজে কৃষি বাজার তথ্যের সম্পূর্ণ অ্যাক্সেস।</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            {% for plan in plans %}
+            <div class="relative bg-white rounded-2xl shadow-sm border-2 p-6
+                {% if plan.plan_type == 'premium' %}border-primary-500 ring-2 ring-primary-100{% else %}border-gray-200{% endif %}">
+
+                {% if plan.plan_type == 'premium' %}
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary-600 text-white text-xs font-bold rounded-full">
+                    জনপ্রিয়
+                </div>
+                {% endif %}
+
+                <div class="text-center mb-6">
+                    <h3 class="text-xl font-bold text-gray-800">{{ plan.name }}</h3>
+                    <p class="text-sm text-gray-500">{{ plan.name_en }}</p>
+                    <div class="mt-4">
+                        <span class="text-4xl font-extrabold text-gray-800">৳{{ plan.price|floatformat:0 }}</span>
+                        <span class="text-gray-500 text-sm">/ {{ plan.duration_days }} দিন</span>
+                    </div>
+                </div>
+
+                <ul class="space-y-3 mb-6">
+                    {% for feature in plan.features %}
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-primary-500 mt-0.5 shrink-0"></i>
+                        <span class="text-sm text-gray-700">{{ feature }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <button class="w-full py-3 rounded-xl font-semibold transition
+                    {% if plan.plan_type == 'premium' %}bg-primary-600 hover:bg-primary-700 text-white{% else %}bg-gray-100 hover:bg-gray-200 text-gray-800{% endif %}">
+                    <i class="fas fa-shopping-cart mr-1"></i> কিনুন
+                </button>
+                <p class="text-xs text-gray-400 text-center mt-2">পেমেন্ট গেটওয়ে শীঘ্রই আসছে</p>
+            </div>
+            {% empty %}
+            <div class="md:col-span-2 text-center py-12 text-gray-400">
+                <i class="fas fa-box-open text-4xl mb-3 block"></i>
+                <p>কোনো প্যাকেজ পাওয়া যায়নি</p>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+{% endblock %}
