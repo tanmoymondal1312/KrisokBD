@@ -252,3 +252,37 @@ def market_detail(request, slug):
         'price_date': price_date,
     }
     return render(request, 'market/market_detail.html', context)
+
+
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    price_date = _get_latest_date_with_data()
+    divisions = Division.objects.filter(is_active=True)
+
+    prices_by_market = MarketPrice.objects.filter(
+        product=product, date=price_date
+    ).select_related('market', 'market__district', 'market__district__division').order_by('market__district__division__order')
+
+    govt = GovernmentPrice.objects.filter(product=product).first()
+
+    division_summary = []
+    for division in divisions:
+        agg = MarketPrice.objects.filter(
+            product=product, date=price_date,
+            market__district__division=division,
+        ).aggregate(avg_min=Avg('min_price'), avg_max=Avg('max_price'))
+        if agg['avg_min']:
+            division_summary.append({
+                'division': division,
+                'avg_min': round(agg['avg_min'], 2),
+                'avg_max': round(agg['avg_max'], 2),
+            })
+
+    context = {
+        'product': product,
+        'prices_by_market': prices_by_market,
+        'division_summary': division_summary,
+        'govt_price': govt,
+        'price_date': price_date,
+    }
+    return render(request, 'market/product_detail.html', context)

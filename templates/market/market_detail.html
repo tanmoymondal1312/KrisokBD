@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}{{ market.name }} - বাজার দর{% endblock %}
+{% block title %}{{ market.name }} - বাজার দর | কৃষক বিডি{% endblock %}
+
+{% block extra_head %}
+<meta name="description" content="{{ market.name }}, {{ market.district.name }}, {{ market.district.division.name }} এর আজকের পাইকারি বাজার দর। সর্বনিম্ন ও সর্বোচ্চ মূল্য দেখুন কৃষক বিডি-তে।">
+<meta property="og:title" content="{{ market.name }} - আজকের বাজার দর">
+<meta property="og:description" content="{{ market.name }} এর দৈনিক পাইকারি বাজার দর - কৃষক বিডি">
+{% endblock %}
 
 {% block content %}
 <section class="py-8 md:py-12">
