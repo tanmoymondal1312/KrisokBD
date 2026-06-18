@@ -1,0 +1,334 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}কৃষক বিডি - বাংলাদেশের কৃষি বাজার তথ্য প্ল্যাটফর্ম{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-primary-300 rounded-full blur-3xl"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+            <div>
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-600/50 border border-primary-400/30 rounded-full text-primary-100 text-xs font-medium mb-6">
+                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                    লাইভ বাজার দর আপডেট চলছে
+                </div>
+                <h1 class="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-4">
+                    বাংলাদেশের <span class="text-primary-300">কৃষি বাজার</span> তথ্যের বিশ্বস্ত উৎস
+                </h1>
+                <p class="text-primary-100 text-lg md:text-xl mb-8 leading-relaxed">
+                    দৈনিক পাইকারি বাজার দর, কৃষক-ব্যবসায়ী নেটওয়ার্ক, এবং বাজার বিশ্লেষণ — সব এক জায়গায়।
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <a href="#market-directory" class="px-6 py-3 bg-white text-primary-700 font-semibold rounded-xl hover:bg-primary-50 transition shadow-lg">
+                        <i class="fas fa-chart-line mr-2"></i> বাজার দর দেখুন
+                    </a>
+                    <a href="#" class="px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-500 transition border border-primary-400/30">
+                        <i class="fas fa-user-plus mr-2"></i> ফ্রি রেজিস্ট্রেশন
+                    </a>
+                </div>
+            </div>
+            <!-- Hero Stats Cards -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-5 text-center">
+                    <div class="text-3xl font-bold text-white">{{ stats.markets_updated }}</div>
+                    <div class="text-primary-200 text-sm mt-1">আজ আপডেট হওয়া বাজার</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-5 text-center">
+                    <div class="text-3xl font-bold text-white">{{ stats.active_farmers }}</div>
+                    <div class="text-primary-200 text-sm mt-1">সক্রিয় কৃষক</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-5 text-center">
+                    <div class="text-3xl font-bold text-white">{{ stats.active_traders }}</div>
+                    <div class="text-primary-200 text-sm mt-1">সক্রিয় ব্যবসায়ী</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-5 text-center">
+                    <div class="text-3xl font-bold text-accent-400">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <div class="text-primary-200 text-sm mt-1">বিশ্বস্ত তথ্যসূত্র</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Marquee -->
+<div class="bg-accent-50 border-y border-accent-200 py-2 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center gap-3">
+            <span class="shrink-0 px-2 py-0.5 bg-red-500 text-white text-xs font-bold rounded">LIVE</span>
+            <div class="overflow-hidden relative">
+                <p class="whitespace-nowrap animate-[marquee_30s_linear_infinite] text-sm text-gray-700">
+                    দৈনিক বাজারদর — Krisokbd.com এ আপনাকে স্বাগতম। আমাদের সেবা চলমান। কৃষক ও ব্যবসায়ীদের জন্য ভেরিফাইড মার্কেটপ্লেস এখন চালু। আমাদের সাথেই থাকুন...
+                </p>
+            </div>
+        </div>
+    </div>
+    <style>
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+    </style>
+</div>
+
+<!-- Market Directory Section -->
+<section id="market-directory" class="py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800">বাজার ডিরেক্টরি</h2>
+            <p class="text-gray-500 mt-2">আপনার প্রয়োজনীয় সব তথ্য এক ক্লিকে</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+
+            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 mx-auto bg-primary-50 group-hover:bg-primary-100 rounded-xl flex items-center justify-center mb-3 transition">
+                    <i class="fas fa-tags text-2xl text-primary-600"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 text-sm leading-tight">আজকের পাইকারি বাজার দর</h4>
+            </a>
+
+            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 mx-auto bg-blue-50 group-hover:bg-blue-100 rounded-xl flex items-center justify-center mb-3 transition">
+                    <i class="fas fa-map-marker-alt text-2xl text-blue-600"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 text-sm leading-tight">বিভাগ ও পণ্যভিত্তিক পাইকারি দর</h4>
+            </a>
+
+            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 mx-auto bg-amber-50 group-hover:bg-amber-100 rounded-xl flex items-center justify-center mb-3 transition">
+                    <i class="fas fa-chart-bar text-2xl text-amber-600"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 text-sm leading-tight">তুলনামূলক তথ্যচিত্র</h4>
+            </a>
+
+            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 mx-auto bg-purple-50 group-hover:bg-purple-100 rounded-xl flex items-center justify-center mb-3 transition">
+                    <i class="fas fa-chart-area text-2xl text-purple-600"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 text-sm leading-tight">সর্বোচ্চ ও সর্বনিম্ন আঞ্চলিক গ্রাফ</h4>
+            </a>
+
+            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 mx-auto bg-emerald-50 group-hover:bg-emerald-100 rounded-xl flex items-center justify-center mb-3 transition">
+                    <i class="fas fa-id-card text-2xl text-emerald-600"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 text-sm leading-tight">কৃষক ও ব্যবসায়ী প্রোফাইল</h4>
+            </a>
+
+        </div>
+
+        <!-- Second Row -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mt-4 md:mt-6">
+
+            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 mx-auto bg-teal-50 group-hover:bg-teal-100 rounded-xl flex items-center justify-center mb-3 transition">
+                    <i class="fas fa-comments text-2xl text-teal-600"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 text-sm leading-tight">কৃষি সামাজিক মাধ্যম</h4>
+            </a>
+
+            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 mx-auto bg-orange-50 group-hover:bg-orange-100 rounded-xl flex items-center justify-center mb-3 transition">
+                    <i class="fas fa-exchange-alt text-2xl text-orange-600"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 text-sm leading-tight">ক্রয় বিক্রয়</h4>
+            </a>
+
+            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-red-200 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 mx-auto bg-red-50 group-hover:bg-red-100 rounded-xl flex items-center justify-center mb-3 transition">
+                    <i class="fab fa-youtube text-2xl text-red-600"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 text-sm leading-tight">ইউটিউব ভিডিও</h4>
+            </a>
+
+            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 mx-auto bg-indigo-50 group-hover:bg-indigo-100 rounded-xl flex items-center justify-center mb-3 transition">
+                    <i class="fas fa-landmark text-2xl text-indigo-600"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 text-sm leading-tight">সরকার নির্ধারিত মূল্য</h4>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- Today's Market Price Section (with smart fallback) -->
+<section class="py-12 bg-white" x-data="{ loading: false }">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+            <div>
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800">আজকের বাজার দর</h2>
+                <p class="text-gray-500 text-sm mt-1">
+                    <i class="fas fa-clock mr-1"></i> সর্বশেষ আপডেট: <span class="text-primary-600 font-medium">আপডেট চলছে...</span>
+                </p>
+            </div>
+            <a href="#" class="px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition">
+                সব দেখুন <i class="fas fa-arrow-right ml-1"></i>
+            </a>
+        </div>
+
+        <!-- Smart Fallback Notice -->
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 flex items-start gap-3">
+            <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center shrink-0 mt-0.5">
+                <i class="fas fa-sync-alt text-amber-600 animate-spin"></i>
+            </div>
+            <div>
+                <p class="text-sm font-medium text-amber-800">আজকের ডেটা আপডেট হচ্ছে</p>
+                <p class="text-xs text-amber-600 mt-0.5">সর্বশেষ আপডেটেড বাজার দর দেখানো হচ্ছে। নতুন ডেটা আসলে স্বয়ংক্রিয়ভাবে আপডেট হবে।</p>
+            </div>
+        </div>
+
+        <!-- Price Table -->
+        <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-primary-700 text-white">
+                            <th class="px-4 py-3 text-left text-sm font-semibold">পণ্যের নাম</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold">পণ্যের ধরণ</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold">সর্বনিম্ন মূল্য (৳)</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold">সর্বোচ্চ মূল্য (৳)</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold">সরকারি মূল্য (৳)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="px-4 py-3 text-sm font-medium">পেঁয়াজ</td>
+                            <td class="px-4 py-3 text-sm text-gray-500">দেশি</td>
+                            <td class="px-4 py-3 text-center text-sm">৳ ৩৫</td>
+                            <td class="px-4 py-3 text-center text-sm">৳ ৪৫</td>
+                            <td class="px-4 py-3 text-center text-sm text-gray-400">৳ ৪০</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition bg-gray-50/50">
+                            <td class="px-4 py-3 text-sm font-medium">আলু</td>
+                            <td class="px-4 py-3 text-sm text-gray-500">দেশি</td>
+                            <td class="px-4 py-3 text-center text-sm">৳ ২০</td>
+                            <td class="px-4 py-3 text-center text-sm">৳ ৩০</td>
+                            <td class="px-4 py-3 text-center text-sm text-gray-400">৳ ২৫</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="px-4 py-3 text-sm font-medium">রসুন</td>
+                            <td class="px-4 py-3 text-sm text-gray-500">দেশি</td>
+                            <td class="px-4 py-3 text-center text-sm">৳ ১৮০</td>
+                            <td class="px-4 py-3 text-center text-sm">৳ ২২০</td>
+                            <td class="px-4 py-3 text-center text-sm text-gray-400">৳ ২০০</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition bg-gray-50/50">
+                            <td class="px-4 py-3 text-sm font-medium">আদা</td>
+                            <td class="px-4 py-3 text-sm text-gray-500">দেশি</td>
+                            <td class="px-4 py-3 text-center text-sm">৳ ২৪০</td>
+                            <td class="px-4 py-3 text-center text-sm">৳ ৩০০</td>
+                            <td class="px-4 py-3 text-center text-sm text-gray-400">—</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="px-4 py-3 text-sm font-medium">মরিচ (কাঁচা)</td>
+                            <td class="px-4 py-3 text-sm text-gray-500">দেশি</td>
+                            <td class="px-4 py-3 text-center text-sm">৳ ৬০</td>
+                            <td class="px-4 py-3 text-center text-sm">৳ ৮০</td>
+                            <td class="px-4 py-3 text-center text-sm text-gray-400">—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Popular Markets Quick Access -->
+<section class="py-12 md:py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800">দেশের জনপ্রিয় বড় বাজারসমূহ</h2>
+            <p class="text-gray-500 mt-2">এক ক্লিকে বড় বাজারের দর দেখুন</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {% for market in popular_markets %}
+            <a href="#" class="group bg-white rounded-xl p-4 flex items-center gap-3 shadow-sm hover:shadow-lg border border-gray-100 hover:border-primary-300 transition-all duration-300">
+                <div class="w-10 h-10 bg-primary-100 group-hover:bg-primary-200 rounded-lg flex items-center justify-center shrink-0 transition">
+                    <i class="fas fa-store text-primary-600"></i>
+                </div>
+                <div class="min-w-0">
+                    <h4 class="font-semibold text-gray-800 text-sm truncate">{{ market.name }}</h4>
+                    <p class="text-xs text-gray-400">{{ market.location }}</p>
+                </div>
+                <i class="fas fa-chevron-right text-gray-300 group-hover:text-primary-500 ml-auto text-xs transition"></i>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="py-12 md:py-16 bg-primary-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <h2 class="text-2xl md:text-3xl font-bold text-white">তথ্যচিত্র</h2>
+            <p class="text-primary-200 mt-2">কৃষক বিডি-র সেবার পরিসংখ্যান</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
+                <div class="w-12 h-12 mx-auto bg-white/10 rounded-xl flex items-center justify-center mb-3">
+                    <i class="fas fa-users text-2xl text-primary-200"></i>
+                </div>
+                <div class="text-3xl font-bold text-white">{{ stats.today_visitors }}</div>
+                <div class="text-primary-200 text-sm mt-1">আজকের সেবা গ্রহীতা</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
+                <div class="w-12 h-12 mx-auto bg-white/10 rounded-xl flex items-center justify-center mb-3">
+                    <i class="fas fa-chart-line text-2xl text-primary-200"></i>
+                </div>
+                <div class="text-3xl font-bold text-white">{{ stats.total_visitors|floatformat:0 }}</div>
+                <div class="text-primary-200 text-sm mt-1">মোট সেবা গ্রহীতা</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
+                <div class="w-12 h-12 mx-auto bg-white/10 rounded-xl flex items-center justify-center mb-3">
+                    <i class="fas fa-user-check text-2xl text-primary-200"></i>
+                </div>
+                <div class="text-3xl font-bold text-white">{{ stats.total_registered }}</div>
+                <div class="text-primary-200 text-sm mt-1">মোট রেজিস্ট্রার</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center">
+                <div class="w-12 h-12 mx-auto bg-white/10 rounded-xl flex items-center justify-center mb-3">
+                    <i class="fas fa-eye text-2xl text-primary-200"></i>
+                </div>
+                <div class="text-3xl font-bold text-white">{{ stats.total_page_views|floatformat:0 }}</div>
+                <div class="text-primary-200 text-sm mt-1">মোট পেজ ভিজিট</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-12 md:py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="bg-gradient-to-br from-primary-50 to-primary-100 rounded-3xl p-8 md:p-12 border border-primary-200">
+            <div class="w-16 h-16 mx-auto bg-primary-600 rounded-2xl flex items-center justify-center mb-6">
+                <i class="fas fa-seedling text-3xl text-white"></i>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-3">আজই যোগ দিন কৃষক বিডি-তে</h2>
+            <p class="text-gray-600 mb-8 max-w-xl mx-auto">
+                ফ্রি রেজিস্ট্রেশন করুন এবং ৬০ দিনের সম্পূর্ণ ফ্রি ট্রায়াল পান। বাজার দর, বিশ্লেষণ, কৃষক-ব্যবসায়ী নেটওয়ার্ক — সব কিছু।
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <a href="#" class="px-8 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition shadow-lg">
+                    <i class="fas fa-user-plus mr-2"></i> ফ্রি রেজিস্ট্রেশন
+                </a>
+                <a href="#" class="px-8 py-3 bg-white text-primary-700 font-semibold rounded-xl hover:bg-gray-50 transition border border-primary-200">
+                    <i class="fas fa-info-circle mr-2"></i> আরো জানুন
+                </a>
+            </div>
+            <p class="text-xs text-gray-400 mt-4">
+                <i class="fas fa-gift mr-1"></i> প্রথম ৬০ দিন সম্পূর্ণ বিনামূল্যে • কোনো কার্ড প্রয়োজন নেই
+            </p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
