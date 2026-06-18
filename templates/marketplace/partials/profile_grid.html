@@ -1,0 +1,43 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for u in users %}
+    <a href="{% url 'marketplace:profile_detail' u.username %}" class="group bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-200 transition-all duration-300 p-5">
+        <div class="flex items-center gap-3 mb-3">
+            <div class="w-12 h-12 bg-primary-100 text-primary-700 rounded-full flex items-center justify-center text-lg font-bold shrink-0 {% if u.is_verified %}ring-2 ring-primary-400{% endif %}">
+                {{ u.first_name|first|default:u.username|first }}
+            </div>
+            <div class="min-w-0">
+                <h3 class="font-semibold text-gray-800 text-sm truncate group-hover:text-primary-700 transition">
+                    {{ u.first_name|default:u.username }}
+                    {% if u.is_verified %}
+                    <i class="fas fa-check-circle text-primary-500 text-xs ml-1"></i>
+                    {% endif %}
+                </h3>
+                <p class="text-xs text-gray-400">{{ u.get_user_type_display }}{% if u.district %} • {{ u.district }}{% endif %}</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4 text-xs text-gray-500">
+            <span>
+                {% if u.avg_rating %}
+                <span class="text-amber-500">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= u.avg_rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}
+                    {% endfor %}
+                </span>
+                <span class="ml-1">({{ u.rating_count }})</span>
+                {% else %}
+                <span class="text-gray-300"><i class="far fa-star"></i> রেটিং নেই</span>
+                {% endif %}
+            </span>
+            {% if u.post_count > 0 %}
+            <span><i class="fas fa-clipboard-list mr-1"></i> {{ u.post_count }} পোস্ট</span>
+            {% endif %}
+        </div>
+    </a>
+    {% empty %}
+    <div class="sm:col-span-2 lg:col-span-3 text-center py-16 text-gray-400">
+        <i class="fas fa-users text-5xl mb-3 block"></i>
+        <p class="text-lg">কোনো প্রোফাইল পাওয়া যায়নি</p>
+    </div>
+    {% endfor %}
+</div>

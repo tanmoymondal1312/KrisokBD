@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}{{ profile_user.first_name|default:profile_user.username }} - কৃষক বিডি{% endblock %}
+
+{% block extra_head %}
+<meta name="description" content="{{ profile_user.first_name|default:profile_user.username }} — {{ profile_user.get_user_type_display }}। কৃষক বিডি-তে প্রোফাইল দেখুন।">
+{% endblock %}
+
+{% block content %}
+<section class="py-8 md:py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <a href="{% url 'marketplace:profile_list' %}" class="text-sm text-primary-600 hover:text-primary-700 mb-4 inline-block">
+            <i class="fas fa-arrow-left mr-1"></i> প্রোফাইল তালিকা
+        </a>
+
+        <!-- Profile Card -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-6">
+            <div class="flex flex-col sm:flex-row items-start gap-4">
+                <div class="w-20 h-20 bg-primary-100 text-primary-700 rounded-full flex items-center justify-center text-3xl font-bold shrink-0 {% if profile_user.is_verified %}ring-3 ring-primary-400{% endif %}">
+                    {% if profile_user.avatar %}
+                    <img src="{{ profile_user.avatar.url }}" class="w-20 h-20 rounded-full object-cover">
+                    {% else %}
+                    {{ profile_user.first_name|first|default:profile_user.username|first }}
+                    {% endif %}
+                </div>
+                <div class="flex-1">
+                    <h1 class="text-2xl font-bold text-gray-800">
+                        {{ profile_user.first_name }} {{ profile_user.last_name }}
+                        {% if profile_user.is_verified %}
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-primary-100 text-primary-700 text-xs font-medium rounded-full ml-2">
+                            <i class="fas fa-check-circle"></i> ভেরিফাইড
+                        </span>
+                        {% endif %}
+                    </h1>
+                    <p class="text-gray-500 text-sm">{{ profile_user.get_user_type_display }}{% if profile_user.district %} • {{ profile_user.district }}{% endif %}</p>
+
+                    <!-- Rating -->
+                    <div class="flex items-center gap-2 mt-2">
+                        <div class="text-amber-500">
+                            {% if stats.avg_rating %}
+                            {% with avg=stats.avg_rating|floatformat:1 %}
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= stats.avg_rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}
+                            {% endfor %}
+                            <span class="text-sm font-medium text-gray-700 ml-1">{{ avg }}</span>
+                            {% endwith %}
+                            {% else %}
+                            <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                            {% endif %}
+                        </div>
+                        <span class="text-xs text-gray-400">({{ stats.rating_count|default:0 }} রেটিং)</span>
+                    </div>
+
+                    {% if profile_user.phone %}
+                    <a href="tel:{{ profile_user.phone }}" class="inline-flex items-center gap-2 mt-3 px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm rounded-lg transition">
+                        <i class="fas fa-phone"></i> {{ profile_user.phone }}
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Posts -->
+        {% if posts %}
+        <div class="mb-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">পোস্টসমূহ</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {% for post in posts %}
+                <a href="{% url 'marketplace:post_detail' post.pk %}" class="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md transition">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="px-2 py-0.5 text-xs rounded-full {% if post.post_type == 'sell' %}bg-green-100 text-green-700{% else %}bg-blue-100 text-blue-700{% endif %}">
+                            {{ post.get_post_type_display }}
+                        </span>
+                    </div>
+                    <h3 class="font-medium text-gray-800 text-sm">{{ post.title }}</h3>
+                    <p class="text-primary-700 font-bold mt-1">৳{{ post.price|floatformat:0 }}/{{ post.unit }}</p>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Rating Form -->
+        {% if rating_form %}
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">রেটিং দিন</h2>
+            <form method="POST" action="{% url 'marketplace:rate_user' profile_user.username %}">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">তারকা নির্বাচন করুন</label>
+                    <div class="flex gap-2" x-data="{ rating: 0 }">
+                        {% for i in "12345" %}
+                        <label class="cursor-pointer">
+                            <input type="radio" name="score" value="{{ forloop.counter }}" class="hidden" @click="rating = {{ forloop.counter }}">
+                            <i class="text-2xl transition" :class="rating >= {{ forloop.counter }} ? 'fas fa-star text-amber-400' : 'far fa-star text-gray-300 hover:text-amber-300'"></i>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <textarea name="comment" rows="2" placeholder="মন্তব্য (ঐচ্ছিক)"
+                              class="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"></textarea>
+                </div>
+                <button type="submit" class="px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium text-sm rounded-lg transition">
+                    <i class="fas fa-star mr-1"></i> রেটিং দিন
+                </button>
+            </form>
+        </div>
+        {% elif already_rated %}
+        <div class="bg-primary-50 border border-primary-200 rounded-xl p-4 mb-6 text-center">
+            <i class="fas fa-check-circle text-primary-500 mr-1"></i>
+            <span class="text-sm text-primary-700">আপনি ইতিমধ্যে রেটিং দিয়েছেন</span>
+        </div>
+        {% endif %}
+
+        <!-- Recent Ratings -->
+        {% if ratings %}
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">সাম্প্রতিক রেটিং</h2>
+            <div class="space-y-4">
+                {% for r in ratings %}
+                <div class="flex items-start gap-3 pb-4 {% if not forloop.last %}border-b border-gray-100{% endif %}">
+                    <div class="w-8 h-8 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center text-xs font-bold shrink-0">
+                        {{ r.rated_by.first_name|first|default:r.rated_by.username|first }}
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-800">{{ r.rated_by.first_name|default:r.rated_by.username }}</p>
+                        <div class="text-amber-400 text-xs">
+                            {% for i in "12345" %}{% if forloop.counter <= r.score %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}{% endfor %}
+                        </div>
+                        {% if r.comment %}<p class="text-xs text-gray-500 mt-1">{{ r.comment }}</p>{% endif %}
+                    </div>
+                    <span class="text-xs text-gray-400 ml-auto">{{ r.created_at|timesince }} আগে</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}

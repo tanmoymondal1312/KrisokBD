@@ -1,0 +1,54 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for post in posts %}
+    <a href="{% url 'marketplace:post_detail' post.pk %}" class="group bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-200 transition-all duration-300 overflow-hidden">
+        {% if post.image %}
+        <div class="h-44 overflow-hidden bg-gray-100">
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+        </div>
+        {% else %}
+        <div class="h-44 bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center">
+            <i class="fas fa-seedling text-5xl text-primary-300"></i>
+        </div>
+        {% endif %}
+
+        <div class="p-4">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="px-2 py-0.5 text-xs font-medium rounded-full {% if post.post_type == 'sell' %}bg-green-100 text-green-700{% else %}bg-blue-100 text-blue-700{% endif %}">
+                    {% if post.post_type == 'sell' %}বিক্রয়{% else %}ক্রয়{% endif %}
+                </span>
+                {% if post.category %}
+                <span class="text-xs text-gray-400">{{ post.category.name }}</span>
+                {% endif %}
+            </div>
+
+            <h3 class="font-semibold text-gray-800 text-sm group-hover:text-primary-700 transition line-clamp-2">{{ post.title }}</h3>
+
+            <div class="flex items-center justify-between mt-3">
+                <span class="text-lg font-bold text-primary-700">৳{{ post.price|floatformat:0 }}<span class="text-xs font-normal text-gray-400">/{{ post.unit }}</span></span>
+                <span class="text-xs text-gray-400">{{ post.quantity }}</span>
+            </div>
+
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100">
+                <div class="w-6 h-6 bg-primary-100 text-primary-700 rounded-full flex items-center justify-center text-xs font-bold">
+                    {{ post.user.first_name|first|default:post.user.username|first }}
+                </div>
+                <span class="text-xs text-gray-500">{{ post.user.first_name|default:post.user.username }}</span>
+                {% if post.user.is_verified %}
+                <i class="fas fa-check-circle text-primary-500 text-xs"></i>
+                {% endif %}
+                <span class="text-xs text-gray-400 ml-auto">{{ post.created_at|timesince }} আগে</span>
+            </div>
+        </div>
+    </a>
+    {% empty %}
+    <div class="sm:col-span-2 lg:col-span-3 text-center py-16 text-gray-400">
+        <i class="fas fa-store text-5xl mb-3 block"></i>
+        <p class="text-lg">কোনো পোস্ট পাওয়া যায়নি</p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'marketplace:post_create' %}" class="inline-block mt-3 px-4 py-2 bg-primary-600 text-white text-sm rounded-lg hover:bg-primary-700 transition">
+            প্রথম পোস্ট দিন
+        </a>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>

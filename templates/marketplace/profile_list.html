@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}কৃষক ও ব্যবসায়ী - কৃষক বিডি{% endblock %}
+
+{% block extra_head %}
+<meta name="description" content="কৃষক বিডি-র ভেরিফাইড কৃষক ও ব্যবসায়ীদের তালিকা। সরাসরি যোগাযোগ করুন।">
+{% endblock %}
+
+{% block content %}
+<section class="py-8 md:py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="mb-8">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-800">কৃষক ও ব্যবসায়ী প্রোফাইল</h1>
+            <p class="text-gray-500 text-sm mt-1">ভেরিফাইড কৃষক ও ব্যবসায়ীদের খুঁজুন</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">
+            <div class="flex flex-wrap gap-3 items-end">
+                <div class="flex gap-2">
+                    <a href="{% url 'marketplace:profile_list' %}"
+                       class="px-4 py-2 rounded-lg text-sm font-medium transition {% if not selected_type %}bg-primary-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                        সকল
+                    </a>
+                    <a href="{% url 'marketplace:profile_list' %}?type=farmer"
+                       class="px-4 py-2 rounded-lg text-sm font-medium transition {% if selected_type == 'farmer' %}bg-primary-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                        <i class="fas fa-seedling mr-1"></i> কৃষক
+                    </a>
+                    <a href="{% url 'marketplace:profile_list' %}?type=trader"
+                       class="px-4 py-2 rounded-lg text-sm font-medium transition {% if selected_type == 'trader' %}bg-primary-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                        <i class="fas fa-store mr-1"></i> ব্যবসায়ী
+                    </a>
+                </div>
+                <div class="flex-1 min-w-[200px]">
+                    <input type="text" name="q" value="{{ search_query }}"
+                           placeholder="নাম বা অঞ্চল দিয়ে খুঁজুন..."
+                           hx-get="{% url 'marketplace:profile_list' %}"
+                           hx-trigger="keyup changed delay:300ms"
+                           hx-target="#profile-grid"
+                           class="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                </div>
+            </div>
+        </div>
+
+        <div id="profile-grid">
+            {% include "marketplace/partials/profile_grid.html" %}
+        </div>
+    </div>
+</section>
+{% endblock %}
