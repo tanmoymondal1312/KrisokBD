@@ -1,0 +1,49 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    {% for video in videos %}
+    <div class="group bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 overflow-hidden"
+         x-data="{ playing: false }">
+
+        <!-- Thumbnail / Player -->
+        <div class="relative aspect-video bg-gray-900 cursor-pointer" @click="playing = true">
+            <template x-if="!playing">
+                <div class="relative w-full h-full">
+                    <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}"
+                         class="w-full h-full object-cover group-hover:opacity-80 transition">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <i class="fas fa-play text-white text-lg ml-1"></i>
+                        </div>
+                    </div>
+                    {% if video.is_featured %}
+                    <span class="absolute top-2 left-2 px-2 py-0.5 bg-amber-500 text-white text-xs font-bold rounded">
+                        <i class="fas fa-star mr-1"></i>Featured
+                    </span>
+                    {% endif %}
+                </div>
+            </template>
+            <template x-if="playing">
+                <iframe :src="'{{ video.embed_url }}?autoplay=1'"
+                        class="w-full h-full"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+            </template>
+        </div>
+
+        <div class="p-4">
+            <h3 class="font-semibold text-gray-800 text-sm line-clamp-2 leading-snug">{{ video.title }}</h3>
+            <div class="flex items-center justify-between mt-2">
+                {% if video.category %}
+                <span class="text-xs text-primary-600 bg-primary-50 px-2 py-0.5 rounded">{{ video.category.name }}</span>
+                {% endif %}
+                <span class="text-xs text-gray-400">{{ video.created_at|timesince }} আগে</span>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="sm:col-span-2 lg:col-span-3 text-center py-16 text-gray-400">
+        <i class="fab fa-youtube text-5xl mb-3 block"></i>
+        <p class="text-lg">কোনো ভিডিও পাওয়া যায়নি</p>
+    </div>
+    {% endfor %}
+</div>

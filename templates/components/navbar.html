@@ -71,21 +71,21 @@
                          x-transition:enter-start="opacity-0 -translate-y-1"
                          x-transition:enter-end="opacity-100 translate-y-0"
                          class="absolute top-full right-0 mt-1 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
-                        <a href="#" class="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-50 transition">
+                        <a href="{% url 'content:video_list' %}" class="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-50 transition">
                             <i class="fab fa-youtube text-red-500 w-5"></i>
                             <span class="text-sm">ইউটিউব ভিডিও</span>
                         </a>
-                        <a href="#" class="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-50 transition">
+                        <a href="{% url 'content:govt_prices' %}" class="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-50 transition">
                             <i class="fas fa-landmark text-primary-500 w-5"></i>
                             <span class="text-sm">সরকার নির্ধারিত মূল্য</span>
                         </a>
-                        <a href="#" class="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-50 transition">
+                        <a href="{% url 'content:price_analysis' %}" class="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-50 transition">
+                            <i class="fas fa-chart-pie text-purple-500 w-5"></i>
+                            <span class="text-sm">মূল্য বিশ্লেষণ</span>
+                        </a>
+                        <a href="https://zoom.earth/maps/precipitation/" target="_blank" class="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-50 transition">
                             <i class="fas fa-cloud-sun text-blue-500 w-5"></i>
                             <span class="text-sm">আবহাওয়া রিপোর্ট</span>
-                        </a>
-                        <a href="#" class="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-50 transition">
-                            <i class="fas fa-info-circle text-gray-500 w-5"></i>
-                            <span class="text-sm">আমাদের সম্পর্কে</span>
                         </a>
                     </div>
                 </div>
@@ -169,11 +169,14 @@
             <a href="{% url 'marketplace:profile_list' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50">
                 <i class="fas fa-users w-5"></i> কৃষক ও ব্যবসায়ী
             </a>
-            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50">
+            <a href="{% url 'content:video_list' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50">
                 <i class="fab fa-youtube w-5"></i> ইউটিউব ভিডিও
             </a>
-            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50">
+            <a href="{% url 'content:govt_prices' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50">
                 <i class="fas fa-landmark w-5"></i> সরকার নির্ধারিত মূল্য
+            </a>
+            <a href="{% url 'content:price_analysis' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50">
+                <i class="fas fa-chart-pie w-5"></i> মূল্য বিশ্লেষণ
             </a>
 
             <hr class="my-2">

@@ -28,7 +28,7 @@
                     <a href="#market-directory" class="px-6 py-3 bg-white text-primary-700 font-semibold rounded-xl hover:bg-primary-50 transition shadow-lg">
                         <i class="fas fa-chart-line mr-2"></i> বাজার দর দেখুন
                     </a>
-                    <a href="#" class="px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-500 transition border border-primary-400/30">
+                    <a href="{% url 'accounts:register' %}" class="px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-500 transition border border-primary-400/30">
                         <i class="fas fa-user-plus mr-2"></i> ফ্রি রেজিস্ট্রেশন
                     </a>
                 </div>
@@ -145,14 +145,14 @@
                 <h4 class="font-semibold text-gray-800 text-sm leading-tight">ক্রয় বিক্রয়</h4>
             </a>
 
-            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-red-200 transition-all duration-300 hover:-translate-y-1">
+            <a href="{% url 'content:video_list' %}" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-red-200 transition-all duration-300 hover:-translate-y-1">
                 <div class="w-14 h-14 mx-auto bg-red-50 group-hover:bg-red-100 rounded-xl flex items-center justify-center mb-3 transition">
                     <i class="fab fa-youtube text-2xl text-red-600"></i>
                 </div>
                 <h4 class="font-semibold text-gray-800 text-sm leading-tight">ইউটিউব ভিডিও</h4>
             </a>
 
-            <a href="#" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
+            <a href="{% url 'content:govt_prices' %}" class="group bg-white rounded-2xl p-5 text-center shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-200 transition-all duration-300 hover:-translate-y-1">
                 <div class="w-14 h-14 mx-auto bg-indigo-50 group-hover:bg-indigo-100 rounded-xl flex items-center justify-center mb-3 transition">
                     <i class="fas fa-landmark text-2xl text-indigo-600"></i>
                 </div>
@@ -310,10 +310,10 @@
                 ফ্রি রেজিস্ট্রেশন করুন এবং ৬০ দিনের সম্পূর্ণ ফ্রি ট্রায়াল পান। বাজার দর, বিশ্লেষণ, কৃষক-ব্যবসায়ী নেটওয়ার্ক — সব কিছু।
             </p>
             <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                <a href="#" class="px-8 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition shadow-lg">
+                <a href="{% url 'accounts:register' %}" class="px-8 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition shadow-lg">
                     <i class="fas fa-user-plus mr-2"></i> ফ্রি রেজিস্ট্রেশন
                 </a>
-                <a href="#" class="px-8 py-3 bg-white text-primary-700 font-semibold rounded-xl hover:bg-gray-50 transition border border-primary-200">
+                <a href="{% url 'accounts:packages' %}" class="px-8 py-3 bg-white text-primary-700 font-semibold rounded-xl hover:bg-gray-50 transition border border-primary-200">
                     <i class="fas fa-info-circle mr-2"></i> আরো জানুন
                 </a>
             </div>

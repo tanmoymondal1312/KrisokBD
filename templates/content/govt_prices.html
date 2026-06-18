@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}সরকার নির্ধারিত মূল্য - কৃষক বিডি{% endblock %}
+
+{% block extra_head %}
+<meta name="description" content="বাংলাদেশ সরকার কর্তৃক নির্ধারিত পণ্যের মূল্য তালিকা। বাজার মূল্যের সাথে সরকারি মূল্যের তুলনা করুন।">
+{% endblock %}
+
+{% block content %}
+<section class="py-8 md:py-12">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
+                    <i class="fas fa-landmark text-primary-600 mr-2"></i>সরকার নির্ধারিত মূল্য
+                </h1>
+                <p class="text-gray-500 text-sm mt-1">সরকার কর্তৃক নির্ধারিত পণ্যের মূল্য তালিকা</p>
+            </div>
+            <a href="{% url 'core:home' %}" class="text-sm text-primary-600 hover:text-primary-700">
+                <i class="fas fa-arrow-left mr-1"></i> হোম
+            </a>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-indigo-700 text-white">
+                            <th class="px-5 py-3.5 text-left text-sm font-semibold">পণ্যের নাম</th>
+                            <th class="px-5 py-3.5 text-left text-sm font-semibold">ক্যাটাগরি</th>
+                            <th class="px-5 py-3.5 text-center text-sm font-semibold">সরকারি মূল্য (৳)</th>
+                            <th class="px-5 py-3.5 text-center text-sm font-semibold">একক</th>
+                            <th class="px-5 py-3.5 text-center text-sm font-semibold">কার্যকর তারিখ</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        {% for gp in prices %}
+                        <tr class="hover:bg-gray-50 transition {% if forloop.counter|divisibleby:2 %}bg-gray-50/50{% endif %}">
+                            <td class="px-5 py-3.5">
+                                <a href="{% url 'market:product_detail' gp.product.slug %}" class="text-sm font-medium text-primary-700 hover:underline">{{ gp.product.name }}</a>
+                                <span class="text-xs text-gray-400 block">{{ gp.product.name_en }}</span>
+                            </td>
+                            <td class="px-5 py-3.5 text-sm text-gray-500">{{ gp.product.category.name }}</td>
+                            <td class="px-5 py-3.5 text-center">
+                                <span class="text-base font-bold text-indigo-700">৳ {{ gp.price|floatformat:0 }}</span>
+                            </td>
+                            <td class="px-5 py-3.5 text-center text-sm text-gray-500">{{ gp.product.unit }}</td>
+                            <td class="px-5 py-3.5 text-center text-sm text-gray-400">{{ gp.effective_date|date:"d M, Y" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="px-5 py-8 text-center text-gray-400">
+                                <i class="fas fa-landmark text-3xl mb-2 block"></i>
+                                কোনো সরকারি মূল্য পাওয়া যায়নি
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if prices %}
+            <div class="px-5 py-3 bg-gray-50 border-t text-xs text-gray-400">
+                মোট {{ prices|length }} টি পণ্যের সরকারি মূল্য
+            </div>
+            {% endif %}
+        </div>
+
+        {% if prices %}
+        <div class="mt-4 bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-700">
+            <i class="fas fa-info-circle mr-1"></i>
+            সরকার নির্ধারিত মূল্য এবং বাজার মূল্যের মধ্যে পার্থক্য থাকতে পারে। বিস্তারিত বাজার দর দেখতে
+            <a href="{% url 'market:daily_prices' %}" class="font-medium underline">আজকের বাজার দর</a> পেজ দেখুন।
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /django-admin/
+Disallow: /accounts/profile/
+Disallow: /marketplace/post/create/
+Disallow: /marketplace/my-posts/
+
+Sitemap: https://krisokbd.com/sitemap.xml

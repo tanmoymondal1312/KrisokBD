@@ -23,6 +23,8 @@ INSTALLED_APPS = [
     'accounts',
     'market',
     'marketplace',
+    'content',
+    'django.contrib.sitemaps',
     'custom_admin',
 ]
 

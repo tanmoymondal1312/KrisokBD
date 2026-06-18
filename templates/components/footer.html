@@ -34,11 +34,11 @@
             <div>
                 <h4 class="text-white font-semibold mb-4">দ্রুত লিংক</h4>
                 <ul class="space-y-2.5">
-                    <li><a href="#" class="text-sm hover:text-primary-400 transition">আজকের বাজার দর</a></li>
-                    <li><a href="#" class="text-sm hover:text-primary-400 transition">ক্রয়-বিক্রয়</a></li>
-                    <li><a href="#" class="text-sm hover:text-primary-400 transition">কৃষক প্রোফাইল</a></li>
-                    <li><a href="#" class="text-sm hover:text-primary-400 transition">ব্যবসায়ী প্রোফাইল</a></li>
-                    <li><a href="#" class="text-sm hover:text-primary-400 transition">ইউটিউব ভিডিও</a></li>
+                    <li><a href="{% url 'market:daily_prices' %}" class="text-sm hover:text-primary-400 transition">আজকের বাজার দর</a></li>
+                    <li><a href="{% url 'marketplace:post_list' %}" class="text-sm hover:text-primary-400 transition">ক্রয়-বিক্রয়</a></li>
+                    <li><a href="{% url 'marketplace:profile_list' %}?type=farmer" class="text-sm hover:text-primary-400 transition">কৃষক প্রোফাইল</a></li>
+                    <li><a href="{% url 'marketplace:profile_list' %}?type=trader" class="text-sm hover:text-primary-400 transition">ব্যবসায়ী প্রোফাইল</a></li>
+                    <li><a href="{% url 'content:video_list' %}" class="text-sm hover:text-primary-400 transition">ইউটিউব ভিডিও</a></li>
                 </ul>
             </div>
 
@@ -46,11 +46,11 @@
             <div>
                 <h4 class="text-white font-semibold mb-4">সেবাসমূহ</h4>
                 <ul class="space-y-2.5">
-                    <li><a href="#" class="text-sm hover:text-primary-400 transition">বিভাগভিত্তিক দর</a></li>
-                    <li><a href="#" class="text-sm hover:text-primary-400 transition">তুলনামূলক চার্ট</a></li>
-                    <li><a href="#" class="text-sm hover:text-primary-400 transition">আঞ্চলিক গ্রাফ</a></li>
-                    <li><a href="#" class="text-sm hover:text-primary-400 transition">সরকার নির্ধারিত মূল্য</a></li>
-                    <li><a href="#" class="text-sm hover:text-primary-400 transition">আবহাওয়া রিপোর্ট</a></li>
+                    <li><a href="{% url 'market:division_prices' %}" class="text-sm hover:text-primary-400 transition">বিভাগভিত্তিক দর</a></li>
+                    <li><a href="{% url 'market:comparison_chart' %}" class="text-sm hover:text-primary-400 transition">তুলনামূলক চার্ট</a></li>
+                    <li><a href="{% url 'market:regional_graph' %}" class="text-sm hover:text-primary-400 transition">আঞ্চলিক গ্রাফ</a></li>
+                    <li><a href="{% url 'content:govt_prices' %}" class="text-sm hover:text-primary-400 transition">সরকার নির্ধারিত মূল্য</a></li>
+                    <li><a href="https://zoom.earth/maps/precipitation/" target="_blank" class="text-sm hover:text-primary-400 transition">আবহাওয়া রিপোর্ট</a></li>
                 </ul>
             </div>
 
