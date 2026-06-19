@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}সাবস্ক্রিপশন প্যাকেজ - কৃষক বিডি{% endblock %}
 
@@ -10,6 +11,34 @@
             <h1 class="text-3xl md:text-4xl font-bold text-gray-800">সাবস্ক্রিপশন প্যাকেজ</h1>
             <p class="text-gray-500 mt-2 max-w-xl mx-auto">আপনার প্রয়োজন অনুযায়ী প্যাকেজ নির্বাচন করুন। সকল প্যাকেজে কৃষি বাজার তথ্যের সম্পূর্ণ অ্যাক্সেস।</p>
         </div>
+
+        <!-- Current Status -->
+        {% if user.is_authenticated %}
+        <div class="max-w-3xl mx-auto mb-8 p-4 rounded-xl
+            {% if user.has_access %}bg-green-50 border border-green-200{% else %}bg-red-50 border border-red-200{% endif %}">
+            <div class="flex items-center gap-3">
+                {% if user.subscription_status == 'trial' %}
+                <i class="fas fa-clock text-green-600 text-xl"></i>
+                <div>
+                    <p class="text-sm font-medium text-green-800">ফ্রি ট্রায়াল চলছে</p>
+                    <p class="text-xs text-green-600">{{ user.trial_days_left }} দিন বাকি আছে</p>
+                </div>
+                {% elif user.subscription_status == 'active' %}
+                <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                <div>
+                    <p class="text-sm font-medium text-green-800">{{ user.subscription_plan.name }} সক্রিয়</p>
+                    <p class="text-xs text-green-600">{{ user.subscription_days_left }} দিন বাকি আছে</p>
+                </div>
+                {% else %}
+                <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                <div>
+                    <p class="text-sm font-medium text-red-800">আপনার সেবার মেয়াদ শেষ</p>
+                    <p class="text-xs text-red-600">সেবা চালু রাখতে একটি প্যাকেজ কিনুন</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
 
         <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {% for plan in plans %}
@@ -40,11 +69,23 @@
                     {% endfor %}
                 </ul>
 
-                <button class="w-full py-3 rounded-xl font-semibold transition
-                    {% if plan.plan_type == 'premium' %}bg-primary-600 hover:bg-primary-700 text-white{% else %}bg-gray-100 hover:bg-gray-200 text-gray-800{% endif %}">
-                    <i class="fas fa-shopping-cart mr-1"></i> কিনুন
-                </button>
-                <p class="text-xs text-gray-400 text-center mt-2">পেমেন্ট গেটওয়ে শীঘ্রই আসছে</p>
+                {% if user.is_authenticated %}
+                <a href="{% url 'accounts:initiate_payment' plan.pk %}"
+                   class="block w-full py-3 rounded-xl font-semibold transition text-center
+                    {% if plan.plan_type == 'premium' %}bg-primary-600 hover:bg-primary-700 text-white shadow-lg{% else %}bg-gray-800 hover:bg-gray-900 text-white{% endif %}">
+                    <i class="fas fa-lock mr-1"></i> এখনই কিনুন
+                </a>
+                {% else %}
+                <a href="{% url 'accounts:login' %}?next={% url 'accounts:packages' %}"
+                   class="block w-full py-3 rounded-xl font-semibold transition text-center bg-gray-100 hover:bg-gray-200 text-gray-800">
+                    <i class="fas fa-sign-in-alt mr-1"></i> লগইন করে কিনুন
+                </a>
+                {% endif %}
+
+                <div class="flex items-center justify-center gap-3 mt-3">
+                    <img src="https://securepay.sslcommerz.com/public/image/SSLCommerz-Pay-With-logo-All-Size/sslcommerz_pay_with_logo_round.png" alt="SSLCommerz" class="h-5">
+                    <span class="text-[10px] text-gray-400">নিরাপদ পেমেন্ট</span>
+                </div>
             </div>
             {% empty %}
             <div class="md:col-span-2 text-center py-12 text-gray-400">
@@ -52,6 +93,18 @@
                 <p>কোনো প্যাকেজ পাওয়া যায়নি</p>
             </div>
             {% endfor %}
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="max-w-3xl mx-auto mt-8 text-center">
+            <p class="text-xs text-gray-400 mb-3">সমর্থিত পেমেন্ট মাধ্যম</p>
+            <div class="flex items-center justify-center gap-4 flex-wrap">
+                <span class="px-3 py-1.5 bg-gray-50 border rounded-lg text-xs text-gray-500"><i class="fas fa-mobile-alt mr-1"></i> বিকাশ</span>
+                <span class="px-3 py-1.5 bg-gray-50 border rounded-lg text-xs text-gray-500"><i class="fas fa-mobile-alt mr-1"></i> নগদ</span>
+                <span class="px-3 py-1.5 bg-gray-50 border rounded-lg text-xs text-gray-500"><i class="fas fa-mobile-alt mr-1"></i> রকেট</span>
+                <span class="px-3 py-1.5 bg-gray-50 border rounded-lg text-xs text-gray-500"><i class="fas fa-credit-card mr-1"></i> Visa/Master</span>
+                <span class="px-3 py-1.5 bg-gray-50 border rounded-lg text-xs text-gray-500"><i class="fas fa-university mr-1"></i> ব্যাংক</span>
+            </div>
         </div>
 
     </div>

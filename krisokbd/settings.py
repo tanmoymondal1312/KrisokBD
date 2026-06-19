@@ -88,6 +88,12 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# SSLCommerz Payment Gateway
+SSLCOMMERZ_STORE_ID = os.environ.get('SSLCOMMERZ_STORE_ID', 'nothi6a34ec0be475d')
+SSLCOMMERZ_STORE_PASS = os.environ.get('SSLCOMMERZ_STORE_PASS', 'nothi6a34ec0be475d@ssl')
+SSLCOMMERZ_SANDBOX = True
+SITE_URL = os.environ.get('SITE_URL', 'http://127.0.0.1:8000')
+
 AUTH_USER_MODEL = 'accounts.User'
 
 LOGIN_URL = '/accounts/login/'
