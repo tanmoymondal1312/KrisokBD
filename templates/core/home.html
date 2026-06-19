@@ -5,16 +5,12 @@
 
 {% block content %}
 
-<!-- Hero Image Slider -->
-<section class="relative w-full overflow-hidden" x-data="{ slide: 0 }" x-init="setInterval(() => slide = (slide + 1) % 2, 5000)">
-    <!-- Slide 1 -->
-    <img src="{% static 'images/hero1.webp' %}" alt="কৃষকের পাইকারী বাজার"
-         class="w-full h-auto block transition-opacity duration-1000"
-         :class="slide === 0 ? 'opacity-100' : 'opacity-0 absolute inset-0'">
-    <!-- Slide 2 -->
-    <img src="{% static 'images/hero2.webp' %}" alt="নিরাপদ লেনদেন"
-         class="w-full h-auto transition-opacity duration-1000"
-         :class="slide === 1 ? 'opacity-100 block' : 'opacity-0 absolute inset-0'">
+<!-- Hero Image Slider (left-to-right slide, 3s interval) -->
+<section class="relative w-full overflow-hidden" x-data="{ slide: 0 }" x-init="setInterval(() => slide = (slide + 1) % 2, 3000)">
+    <div class="flex transition-transform duration-700 ease-in-out" :style="'transform: translateX(-' + (slide * 100) + '%)'">
+        <img src="{% static 'images/hero1.webp' %}" alt="কৃষকের পাইকারী বাজার" class="w-full h-auto shrink-0">
+        <img src="{% static 'images/hero2.webp' %}" alt="নিরাপদ লেনদেন" class="w-full h-auto shrink-0">
+    </div>
     <!-- Dots -->
     <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
         <button @click="slide = 0" class="w-2.5 h-2.5 rounded-full transition-all" :class="slide === 0 ? 'bg-white w-6 shadow' : 'bg-white/50'"></button>
