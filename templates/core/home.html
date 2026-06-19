@@ -5,16 +5,41 @@
 
 {% block content %}
 
-<!-- Hero Image Slider (left-to-right slide, 3s interval) -->
-<section class="relative w-full overflow-hidden" x-data="{ slide: 0 }" x-init="setInterval(() => slide = (slide + 1) % 2, 3000)">
-    <div class="flex transition-transform duration-700 ease-in-out" :style="'transform: translateX(-' + (slide * 100) + '%)'">
+<!-- Hero Image Slider (infinite left-to-right loop, 3s interval) -->
+<section class="relative w-full overflow-hidden"
+    x-data="{
+        offset: 0,
+        paused: false,
+        totalSlides: 4,
+        init() {
+            setInterval(() => {
+                if (this.paused) return;
+                this.offset++;
+                if (this.offset >= 2) {
+                    setTimeout(() => {
+                        this.$refs.track.style.transition = 'none';
+                        this.offset = 0;
+                        requestAnimationFrame(() => {
+                            requestAnimationFrame(() => {
+                                this.$refs.track.style.transition = 'transform 700ms ease-in-out';
+                            });
+                        });
+                    }, 700);
+                }
+            }, 3000);
+        }
+    }">
+    <div x-ref="track" class="flex transition-transform duration-700 ease-in-out"
+         :style="'transform: translateX(-' + (offset * 50) + '%)'">
+        <img src="{% static 'images/hero1.webp' %}" alt="কৃষকের পাইকারী বাজার" class="w-full h-auto shrink-0">
+        <img src="{% static 'images/hero2.webp' %}" alt="নিরাপদ লেনদেন" class="w-full h-auto shrink-0">
         <img src="{% static 'images/hero1.webp' %}" alt="কৃষকের পাইকারী বাজার" class="w-full h-auto shrink-0">
         <img src="{% static 'images/hero2.webp' %}" alt="নিরাপদ লেনদেন" class="w-full h-auto shrink-0">
     </div>
     <!-- Dots -->
     <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
-        <button @click="slide = 0" class="w-2.5 h-2.5 rounded-full transition-all" :class="slide === 0 ? 'bg-white w-6 shadow' : 'bg-white/50'"></button>
-        <button @click="slide = 1" class="w-2.5 h-2.5 rounded-full transition-all" :class="slide === 1 ? 'bg-white w-6 shadow' : 'bg-white/50'"></button>
+        <span class="w-2.5 h-2.5 rounded-full transition-all" :class="offset % 2 === 0 ? 'bg-white w-6 shadow' : 'bg-white/50'"></span>
+        <span class="w-2.5 h-2.5 rounded-full transition-all" :class="offset % 2 === 1 ? 'bg-white w-6 shadow' : 'bg-white/50'"></span>
     </div>
 </section>
 
