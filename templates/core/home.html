@@ -5,52 +5,32 @@
 
 {% block content %}
 
-<!-- Hero Image Slider -->
+<!-- Hero Image Slider (pure CSS infinite loop) -->
 <section class="relative w-full overflow-hidden">
-    <div id="hero-track" style="display:flex;">
-        <img src="{% static 'images/hero1.webp' %}" alt="কৃষকের পাইকারী বাজার" style="width:100%;height:auto;flex-shrink:0;">
-        <img src="{% static 'images/hero2.webp' %}" alt="নিরাপদ লেনদেন" style="width:100%;height:auto;flex-shrink:0;">
-        <img src="{% static 'images/hero1.webp' %}" alt="কৃষকের পাইকারী বাজার" style="width:100%;height:auto;flex-shrink:0;">
+    <div class="hero-track">
+        <img src="{% static 'images/hero1.webp' %}" alt="কৃষকের পাইকারী বাজার">
+        <img src="{% static 'images/hero2.webp' %}" alt="নিরাপদ লেনদেন">
+        <img src="{% static 'images/hero1.webp' %}" alt="কৃষকের পাইকারী বাজার">
     </div>
-    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
-        <span id="dot0" class="w-2.5 h-2.5 rounded-full bg-white w-6 shadow"></span>
-        <span id="dot1" class="w-2.5 h-2.5 rounded-full bg-white/50"></span>
-    </div>
-    <script>
-    (function(){
-        var track = document.getElementById('hero-track');
-        var containerW;
-        var pos = 0;
-        var current = 0;
-
-        function getW() { containerW = track.parentElement.offsetWidth; }
-        getW();
-        window.addEventListener('resize', function(){ getW(); track.style.transition='none'; pos = current*containerW; track.style.transform='translateX(-'+pos+'px)'; });
-
-        function slideNext() {
-            current++;
-            track.style.transition = 'transform 800ms ease-in-out';
-            pos = current * containerW;
-            track.style.transform = 'translateX(-' + pos + 'px)';
-
-            // update dots
-            document.getElementById('dot0').className = (current % 2 === 0) ? 'w-6 h-2.5 rounded-full bg-white shadow' : 'w-2.5 h-2.5 rounded-full bg-white/50';
-            document.getElementById('dot1').className = (current % 2 === 1) ? 'w-6 h-2.5 rounded-full bg-white shadow' : 'w-2.5 h-2.5 rounded-full bg-white/50';
-
-            // when we reach the clone (3rd image = copy of 1st), reset silently
-            if (current >= 2) {
-                setTimeout(function(){
-                    track.style.transition = 'none';
-                    current = 0;
-                    pos = 0;
-                    track.style.transform = 'translateX(0px)';
-                }, 820);
-            }
+    <style>
+        .hero-track {
+            display: flex;
+            width: 300%;
+            animation: heroSlide 7.6s ease-in-out infinite;
         }
-
-        setInterval(slideNext, 3000);
-    })();
-    </script>
+        .hero-track img {
+            width: 33.333%;
+            height: auto;
+            flex-shrink: 0;
+        }
+        @keyframes heroSlide {
+            0%    { transform: translateX(0); }
+            39%   { transform: translateX(0); }
+            50%   { transform: translateX(-33.333%); }
+            89%   { transform: translateX(-33.333%); }
+            100%  { transform: translateX(-66.666%); }
+        }
+    </style>
 </section>
 
 <!-- Marquee -->
