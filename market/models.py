@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 from django.utils import timezone
 
@@ -92,7 +94,7 @@ class MarketPrice(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.avg_price:
-            self.avg_price = (self.min_price + self.max_price) / 2
+            self.avg_price = (Decimal(str(self.min_price)) + Decimal(str(self.max_price))) / 2
         super().save(*args, **kwargs)
 
     def __str__(self):
