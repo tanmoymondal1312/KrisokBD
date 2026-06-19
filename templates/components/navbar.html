@@ -5,10 +5,8 @@
         <div class="flex items-center justify-between h-16">
 
             <!-- Logo -->
-            <a href="{% url 'core:home' %}" class="flex items-center gap-3 shrink-0">
-                <div class="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-leaf text-white text-lg"></i>
-                </div>
+            <a href="{% url 'core:home' %}" class="flex items-center gap-2.5 shrink-0">
+                <img src="{% static 'images/logo.jpg' %}" alt="কৃষক বিডি" class="w-11 h-11 rounded-full object-cover">
                 <div class="leading-tight">
                     <span class="text-xl font-bold text-primary-700">কৃষক</span><span class="text-xl font-bold text-gray-700">বিডি</span>
                     <span class="block text-[10px] text-gray-400 -mt-1 tracking-wide">KRISOKBD.COM</span>

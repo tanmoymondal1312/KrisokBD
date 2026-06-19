@@ -38,9 +38,7 @@
         <aside class="hidden lg:flex lg:flex-col w-64 bg-sidebar-bg text-gray-300 shrink-0 fixed inset-y-0 z-30">
             <!-- Logo -->
             <div class="flex items-center gap-3 px-5 py-4 border-b border-gray-800">
-                <div class="w-9 h-9 bg-primary-600 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-leaf text-white"></i>
-                </div>
+                <img src="{% static 'images/logo.jpg' %}" alt="কৃষক বিডি" class="w-10 h-10 rounded-full object-cover">
                 <div>
                     <span class="text-white font-bold">কৃষক বিডি</span>
                     <span class="block text-[10px] text-gray-500">Admin Panel</span>
@@ -78,7 +76,7 @@
                x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full"
                class="fixed inset-y-0 left-0 w-64 bg-sidebar-bg text-gray-300 z-50 lg:hidden">
             <div class="flex items-center justify-between px-5 py-4 border-b border-gray-800">
-                <span class="text-white font-bold">কৃষক বিডি Admin</span>
+                <span class="text-white font-bold"><img src="{% static 'images/logo.jpg' %}" alt="" class="w-7 h-7 rounded-full inline mr-1"> কৃষক বিডি</span>
                 <button @click="mobileSidebar = false" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
             </div>
             <nav class="overflow-y-auto py-4 px-3 space-y-1">
