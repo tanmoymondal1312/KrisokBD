@@ -5,61 +5,77 @@
 
 {% block content %}
 
-<!-- Hero Section -->
-<section class="relative bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 overflow-hidden">
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
-        <div class="absolute bottom-10 right-10 w-96 h-96 bg-primary-300 rounded-full blur-3xl"></div>
+<!-- Hero Section with Image Slider -->
+<section class="relative overflow-hidden" x-data="{ slide: 0 }" x-init="setInterval(() => slide = (slide + 1) % 2, 5000)">
+
+    <!-- Background Slides -->
+    <div class="absolute inset-0">
+        <div class="absolute inset-0 transition-opacity duration-1000" :class="slide === 0 ? 'opacity-100' : 'opacity-0'">
+            <img src="{% static 'images/hero1.jpeg' %}" alt="KrisokBD" class="w-full h-full object-cover">
+        </div>
+        <div class="absolute inset-0 transition-opacity duration-1000" :class="slide === 1 ? 'opacity-100' : 'opacity-0'">
+            <img src="{% static 'images/hero2.jpeg' %}" alt="KrisokBD" class="w-full h-full object-cover">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
     </div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div class="grid md:grid-cols-2 gap-10 items-center">
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <!-- Left: Text Content -->
             <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-600/50 border border-primary-400/30 rounded-full text-primary-100 text-xs font-medium mb-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white text-xs font-medium mb-5">
                     <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
                     লাইভ বাজার দর আপডেট চলছে
                 </div>
-                <h1 class="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-4">
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-4">
                     বাংলাদেশের <span class="text-primary-300">কৃষি বাজার</span> তথ্যের বিশ্বস্ত উৎস
                 </h1>
-                <p class="text-primary-100 text-lg md:text-xl mb-8 leading-relaxed">
+                <p class="text-gray-200 text-base md:text-lg mb-6 leading-relaxed max-w-lg">
                     দৈনিক পাইকারি বাজার দর, কৃষক-ব্যবসায়ী নেটওয়ার্ক, এবং বাজার বিশ্লেষণ — সব এক জায়গায়।
                 </p>
                 <div class="flex flex-wrap gap-3">
-                    <a href="#market-directory" class="px-6 py-3 bg-white text-primary-700 font-semibold rounded-xl hover:bg-primary-50 transition shadow-lg">
+                    <a href="#market-directory" class="px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition shadow-lg">
                         <i class="fas fa-chart-line mr-2"></i> বাজার দর দেখুন
                     </a>
-                    <a href="{% url 'accounts:register' %}" class="px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-500 transition border border-primary-400/30">
+                    <a href="{% url 'accounts:register' %}" class="px-6 py-3 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl hover:bg-white/20 transition border border-white/20">
                         <i class="fas fa-user-plus mr-2"></i> ফ্রি রেজিস্ট্রেশন
                     </a>
                 </div>
             </div>
-            <!-- Hero Stats Cards -->
-            <div class="grid grid-cols-2 gap-4">
-                <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-5 text-center">
-                    <div class="text-3xl font-bold text-white">{{ stats.markets_updated }}</div>
-                    <div class="text-primary-200 text-sm mt-1">আজ আপডেট হওয়া বাজার</div>
+
+            <!-- Right: Stats Cards -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-4 text-center">
+                    <div class="text-2xl md:text-3xl font-bold text-white">{{ stats.markets_updated }}</div>
+                    <div class="text-gray-300 text-xs mt-1">আজ আপডেট হওয়া বাজার</div>
                 </div>
-                <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-5 text-center">
-                    <div class="text-3xl font-bold text-white">{{ stats.active_farmers }}</div>
-                    <div class="text-primary-200 text-sm mt-1">সক্রিয় কৃষক</div>
+                <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-4 text-center">
+                    <div class="text-2xl md:text-3xl font-bold text-white">{{ stats.active_farmers }}</div>
+                    <div class="text-gray-300 text-xs mt-1">সক্রিয় কৃষক</div>
                 </div>
-                <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-5 text-center">
-                    <div class="text-3xl font-bold text-white">{{ stats.active_traders }}</div>
-                    <div class="text-primary-200 text-sm mt-1">সক্রিয় ব্যবসায়ী</div>
+                <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-4 text-center">
+                    <div class="text-2xl md:text-3xl font-bold text-white">{{ stats.active_traders }}</div>
+                    <div class="text-gray-300 text-xs mt-1">সক্রিয় ব্যবসায়ী</div>
                 </div>
-                <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-5 text-center">
+                <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-4 text-center">
                     {% if top_change %}
-                    <div class="text-3xl font-bold {% if top_change.direction == 'up' %}text-red-400{% elif top_change.direction == 'down' %}text-green-400{% else %}text-white{% endif %}">
-                        {% if top_change.direction == 'up' %}<i class="fas fa-arrow-up text-xl"></i>{% elif top_change.direction == 'down' %}<i class="fas fa-arrow-down text-xl"></i>{% else %}—{% endif %}
+                    <div class="text-2xl md:text-3xl font-bold {% if top_change.direction == 'up' %}text-red-400{% elif top_change.direction == 'down' %}text-green-400{% else %}text-white{% endif %}">
+                        {% if top_change.direction == 'up' %}<i class="fas fa-arrow-up text-lg"></i>{% elif top_change.direction == 'down' %}<i class="fas fa-arrow-down text-lg"></i>{% else %}—{% endif %}
                         {{ top_change.change_pct }}%
                     </div>
-                    <div class="text-primary-200 text-sm mt-1">{{ top_change.product.name }} মূল্য পরিবর্তন</div>
+                    <div class="text-gray-300 text-xs mt-1">{{ top_change.product.name }} মূল্য পরিবর্তন</div>
                     {% else %}
-                    <div class="text-3xl font-bold text-accent-400"><i class="fas fa-shield-alt text-2xl"></i></div>
-                    <div class="text-primary-200 text-sm mt-1">বিশ্বস্ত তথ্যসূত্র</div>
+                    <div class="text-2xl font-bold text-primary-400"><i class="fas fa-shield-alt"></i></div>
+                    <div class="text-gray-300 text-xs mt-1">বিশ্বস্ত তথ্যসূত্র</div>
                     {% endif %}
                 </div>
             </div>
+        </div>
+
+        <!-- Slide Dots -->
+        <div class="flex justify-center gap-2 mt-6">
+            <button @click="slide = 0" class="w-2.5 h-2.5 rounded-full transition-all" :class="slide === 0 ? 'bg-white w-6' : 'bg-white/40'"></button>
+            <button @click="slide = 1" class="w-2.5 h-2.5 rounded-full transition-all" :class="slide === 1 ? 'bg-white w-6' : 'bg-white/40'"></button>
         </div>
     </div>
 </section>
