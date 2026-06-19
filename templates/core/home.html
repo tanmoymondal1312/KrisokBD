@@ -51,44 +51,54 @@
 </div>
 
 <!-- Quick Stats Bar -->
-<section class="bg-primary-700 py-4">
+<section class="bg-primary-700 py-5 md:py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div class="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3">
-                <i class="fas fa-store text-primary-300 text-lg"></i>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/5">
+                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-store text-primary-200 text-xl"></i>
+                </div>
                 <div>
-                    <div class="text-xl font-bold text-white">{{ stats.markets_updated }}</div>
-                    <div class="text-primary-200 text-[11px]">আজ আপডেট হওয়া বাজার</div>
+                    <div class="text-3xl font-extrabold text-white">{{ stats.markets_updated }}</div>
+                    <div class="text-primary-200 text-sm mt-0.5">আজ আপডেট হওয়া বাজার</div>
                 </div>
             </div>
-            <div class="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3">
-                <i class="fas fa-seedling text-primary-300 text-lg"></i>
+            <div class="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/5">
+                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-seedling text-primary-200 text-xl"></i>
+                </div>
                 <div>
-                    <div class="text-xl font-bold text-white">{{ stats.active_farmers }}</div>
-                    <div class="text-primary-200 text-[11px]">সক্রিয় কৃষক</div>
+                    <div class="text-3xl font-extrabold text-white">{{ stats.active_farmers }}</div>
+                    <div class="text-primary-200 text-sm mt-0.5">সক্রিয় কৃষক</div>
                 </div>
             </div>
-            <div class="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3">
-                <i class="fas fa-handshake text-primary-300 text-lg"></i>
+            <div class="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/5">
+                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-handshake text-primary-200 text-xl"></i>
+                </div>
                 <div>
-                    <div class="text-xl font-bold text-white">{{ stats.active_traders }}</div>
-                    <div class="text-primary-200 text-[11px]">সক্রিয় ব্যবসায়ী</div>
+                    <div class="text-3xl font-extrabold text-white">{{ stats.active_traders }}</div>
+                    <div class="text-primary-200 text-sm mt-0.5">সক্রিয় ব্যবসায়ী</div>
                 </div>
             </div>
-            <div class="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3">
+            <div class="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/5">
                 {% if top_change %}
-                <i class="fas fa-chart-line {% if top_change.direction == 'up' %}text-red-400{% else %}text-green-400{% endif %} text-lg"></i>
+                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-chart-line {% if top_change.direction == 'up' %}text-red-400{% else %}text-green-400{% endif %} text-xl"></i>
+                </div>
                 <div>
-                    <div class="text-xl font-bold {% if top_change.direction == 'up' %}text-red-400{% else %}text-green-400{% endif %}">
+                    <div class="text-3xl font-extrabold {% if top_change.direction == 'up' %}text-red-400{% else %}text-green-400{% endif %}">
                         {% if top_change.direction == 'up' %}+{% endif %}{{ top_change.change_pct }}%
                     </div>
-                    <div class="text-primary-200 text-[11px]">{{ top_change.product.name }} মূল্য পরিবর্তন</div>
+                    <div class="text-primary-200 text-sm mt-0.5">{{ top_change.product.name }} মূল্য পরিবর্তন</div>
                 </div>
                 {% else %}
-                <i class="fas fa-shield-alt text-primary-300 text-lg"></i>
+                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-shield-alt text-primary-200 text-xl"></i>
+                </div>
                 <div>
-                    <div class="text-xl font-bold text-white"><i class="fas fa-check"></i></div>
-                    <div class="text-primary-200 text-[11px]">বিশ্বস্ত তথ্যসূত্র</div>
+                    <div class="text-3xl font-extrabold text-white"><i class="fas fa-check"></i></div>
+                    <div class="text-primary-200 text-sm mt-0.5">বিশ্বস্ত তথ্যসূত্র</div>
                 </div>
                 {% endif %}
             </div>
