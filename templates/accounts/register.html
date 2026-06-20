@@ -82,12 +82,27 @@
                 {% csrf_token %}
 
                 <!-- Row 1: Name + Username -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" x-data="{
+                    name: '{{ form.first_name.value|default:'' }}',
+                    username: '{{ form.username.value|default:'' }}',
+                    autoFilled: false,
+                    generateUsername() {
+                        if (!this.name || (this.username && !this.autoFilled)) return;
+                        let base = this.name.trim().toLowerCase()
+                            .replace(/[\sঀ-৿]+/g, '')
+                            .replace(/[^a-z0-9]/g, '');
+                        if (!base) {
+                            base = 'user';
+                        }
+                        this.username = base + Math.floor(100 + Math.random() * 900);
+                        this.autoFilled = true;
+                    }
+                }">
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">আপনার নাম</label>
                         <div class="relative">
                             <i class="fas fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300 text-sm"></i>
-                            <input type="text" name="first_name" value="{{ form.first_name.value|default:'' }}" required
+                            <input type="text" name="first_name" x-model="name" @input.debounce.500ms="generateUsername()" required
                                    placeholder="আপনার নাম"
                                    class="w-full pl-10 pr-4 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition {% if form.first_name.errors %}border-red-300 bg-red-50{% else %}border-gray-200{% endif %}">
                         </div>
@@ -97,10 +112,11 @@
                         <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">ইউজারনেম</label>
                         <div class="relative">
                             <i class="fas fa-at absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300 text-sm"></i>
-                            <input type="text" name="username" value="{{ form.username.value|default:'' }}" required
+                            <input type="text" name="username" x-model="username" @input="autoFilled = false" required
                                    placeholder="ইউজারনেম"
                                    class="w-full pl-10 pr-4 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition {% if form.username.errors %}border-red-300 bg-red-50{% else %}border-gray-200{% endif %}">
                         </div>
+                        <p class="text-[11px] text-gray-400 mt-1" x-show="autoFilled"><i class="fas fa-magic mr-1"></i> স্বয়ংক্রিয়ভাবে তৈরি — পরিবর্তন করতে পারবেন</p>
                         {% if form.username.errors %}<p class="text-xs text-red-500 mt-1">{{ form.username.errors.0 }}</p>{% endif %}
                     </div>
                 </div>
