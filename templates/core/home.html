@@ -318,7 +318,8 @@
     </div>
 </section>
 
-<!-- CTA Section -->
+<!-- CTA Section (only for logged out users) -->
+{% if not user.is_authenticated %}
 <section class="py-12 md:py-16 bg-white">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div class="bg-gradient-to-br from-primary-50 to-primary-100 rounded-3xl p-8 md:p-12 border border-primary-200">
@@ -343,5 +344,6 @@
         </div>
     </div>
 </section>
+{% endif %}
 
 {% endblock %}
