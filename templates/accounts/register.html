@@ -4,68 +4,200 @@
 {% block title %}নিবন্ধন - কৃষক বিডি{% endblock %}
 
 {% block content %}
-<section class="min-h-[80vh] flex items-center justify-center py-12 px-4">
-    <div class="w-full max-w-md">
+<section class="min-h-[85vh] flex items-center justify-center py-8 px-4">
+    <div class="w-full max-w-4xl grid md:grid-cols-5 bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
 
-        <div class="text-center mb-8">
-            <a href="{% url 'core:home' %}" class="inline-flex items-center gap-2 mb-4">
-                <img src="{% static 'images/logo.jpg' %}" alt="কৃষক বিডি" class="w-12 h-12 rounded-full object-cover">
-                <span class="text-2xl font-bold text-primary-700">কৃষক</span><span class="text-2xl font-bold text-gray-700">বিডি</span>
-            </a>
-            <h1 class="text-2xl font-bold text-gray-800">নতুন অ্যাকাউন্ট তৈরি করুন</h1>
-            <p class="text-gray-500 text-sm mt-1">৬০ দিনের ফ্রি ট্রায়াল সহ রেজিস্ট্রেশন করুন</p>
-        </div>
-
-        <!-- Free Trial Badge -->
-        <div class="bg-primary-50 border border-primary-200 rounded-xl p-4 mb-6 text-center">
-            <div class="flex items-center justify-center gap-2 text-primary-700">
-                <i class="fas fa-gift text-xl"></i>
-                <span class="font-semibold">৬০ দিন সম্পূর্ণ ফ্রি!</span>
+        <!-- Left: Visual Panel -->
+        <div class="md:col-span-2 bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 p-8 flex flex-col justify-between relative overflow-hidden hidden md:flex">
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute -top-20 -left-20 w-60 h-60 bg-white rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-primary-300 rounded-full blur-3xl"></div>
             </div>
-            <p class="text-xs text-primary-600 mt-1">রেজিস্ট্রেশনের পর সব সেবা ফ্রিতে ব্যবহার করুন</p>
+            <div class="relative">
+                <a href="{% url 'core:home' %}" class="inline-flex items-center gap-2 mb-8">
+                    <img src="{% static 'images/logo.jpg' %}" alt="কৃষক বিডি" class="w-12 h-12 rounded-full object-cover border-2 border-white/30">
+                    <div>
+                        <span class="text-xl font-bold text-white">কৃষক</span><span class="text-xl font-bold text-primary-300">বিডি</span>
+                    </div>
+                </a>
+                <h2 class="text-2xl font-bold text-white leading-snug mb-3">
+                    বাংলাদেশের কৃষি বাজারে আপনাকে স্বাগতম
+                </h2>
+                <p class="text-primary-200 text-sm leading-relaxed">
+                    দৈনিক পাইকারি বাজার দর, কৃষক-ব্যবসায়ী নেটওয়ার্ক — সব এক জায়গায়।
+                </p>
+            </div>
+
+            <div class="relative space-y-4 mt-8">
+                <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl p-3">
+                    <div class="w-9 h-9 bg-white/15 rounded-lg flex items-center justify-center shrink-0">
+                        <i class="fas fa-gift text-primary-200"></i>
+                    </div>
+                    <div>
+                        <p class="text-white text-sm font-semibold">৬০ দিন ফ্রি ট্রায়াল</p>
+                        <p class="text-primary-300 text-xs">কোনো কার্ড প্রয়োজন নেই</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl p-3">
+                    <div class="w-9 h-9 bg-white/15 rounded-lg flex items-center justify-center shrink-0">
+                        <i class="fas fa-chart-line text-primary-200"></i>
+                    </div>
+                    <div>
+                        <p class="text-white text-sm font-semibold">লাইভ বাজার দর</p>
+                        <p class="text-primary-300 text-xs">প্রতিদিন আপডেটেড মূল্য</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl p-3">
+                    <div class="w-9 h-9 bg-white/15 rounded-lg flex items-center justify-center shrink-0">
+                        <i class="fas fa-handshake text-primary-200"></i>
+                    </div>
+                    <div>
+                        <p class="text-white text-sm font-semibold">সরাসরি কেনাবেচা</p>
+                        <p class="text-primary-300 text-xs">কৃষক ও ব্যবসায়ী সরাসরি সংযোগ</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+        <!-- Right: Form -->
+        <div class="md:col-span-3 p-6 md:p-8">
+            <!-- Mobile Logo -->
+            <div class="flex items-center gap-2 mb-6 md:hidden">
+                <img src="{% static 'images/logo.jpg' %}" alt="কৃষক বিডি" class="w-10 h-10 rounded-full object-cover">
+                <span class="text-xl font-bold text-primary-700">কৃষক</span><span class="text-xl font-bold text-gray-700">বিডি</span>
+            </div>
+
+            <h1 class="text-xl md:text-2xl font-bold text-gray-800 mb-1">নিবন্ধন করুন</h1>
+            <p class="text-gray-400 text-sm mb-6">আপনার তথ্য দিয়ে ফ্রি অ্যাকাউন্ট তৈরি করুন</p>
+
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
+                {% for error in form.non_field_errors %}
+                <p class="text-sm text-red-700"><i class="fas fa-exclamation-circle mr-1"></i> {{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
             <form method="POST" class="space-y-4">
                 {% csrf_token %}
 
-                {% for field in form %}
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ field.label }}</label>
-                    <input type="{{ field.field.widget.input_type|default:'text' }}"
-                           name="{{ field.name }}"
-                           value="{{ field.value|default:'' }}"
-                           placeholder="{{ field.field.widget.attrs.placeholder|default:'' }}"
-                           {% if field.field.widget.input_type == 'select' %}{% else %}
-                           class="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition {% if field.errors %}border-red-300 bg-red-50{% endif %}"
-                           {% endif %}
-                    >
-                    {% if field.name == 'user_type' %}
-                    <select name="{{ field.name }}" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                        {% for value, label in field.field.choices %}
-                        <option value="{{ value }}" {% if field.value == value %}selected{% endif %}>{{ label }}</option>
-                        {% endfor %}
-                    </select>
-                    {% endif %}
-                    {% if field.errors %}
-                    <p class="text-xs text-red-600 mt-1">{{ field.errors.0 }}</p>
-                    {% endif %}
-                    {% if field.help_text %}
-                    <p class="text-xs text-gray-400 mt-1">{{ field.help_text }}</p>
-                    {% endif %}
+                <!-- Row 1: Name + Username -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">আপনার নাম</label>
+                        <div class="relative">
+                            <i class="fas fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300 text-sm"></i>
+                            <input type="text" name="first_name" value="{{ form.first_name.value|default:'' }}" required
+                                   placeholder="আপনার নাম"
+                                   class="w-full pl-10 pr-4 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition {% if form.first_name.errors %}border-red-300 bg-red-50{% else %}border-gray-200{% endif %}">
+                        </div>
+                        {% if form.first_name.errors %}<p class="text-xs text-red-500 mt-1">{{ form.first_name.errors.0 }}</p>{% endif %}
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">ইউজারনেম</label>
+                        <div class="relative">
+                            <i class="fas fa-at absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300 text-sm"></i>
+                            <input type="text" name="username" value="{{ form.username.value|default:'' }}" required
+                                   placeholder="ইউজারনেম"
+                                   class="w-full pl-10 pr-4 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition {% if form.username.errors %}border-red-300 bg-red-50{% else %}border-gray-200{% endif %}">
+                        </div>
+                        {% if form.username.errors %}<p class="text-xs text-red-500 mt-1">{{ form.username.errors.0 }}</p>{% endif %}
+                    </div>
                 </div>
-                {% endfor %}
 
-                <button type="submit" class="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition shadow-sm">
-                    <i class="fas fa-user-plus mr-2"></i> নিবন্ধন করুন
+                <!-- Row 2: Phone + Email -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">মোবাইল নম্বর</label>
+                        <div class="relative">
+                            <i class="fas fa-phone absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300 text-sm"></i>
+                            <input type="tel" name="phone" value="{{ form.phone.value|default:'' }}" required
+                                   placeholder="01XXXXXXXXX"
+                                   class="w-full pl-10 pr-4 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition {% if form.phone.errors %}border-red-300 bg-red-50{% else %}border-gray-200{% endif %}">
+                        </div>
+                        {% if form.phone.errors %}<p class="text-xs text-red-500 mt-1">{{ form.phone.errors.0 }}</p>{% endif %}
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">ইমেইল <span class="text-gray-400 normal-case">(ঐচ্ছিক)</span></label>
+                        <div class="relative">
+                            <i class="fas fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300 text-sm"></i>
+                            <input type="email" name="email" value="{{ form.email.value|default:'' }}"
+                                   placeholder="email@example.com"
+                                   class="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Type -->
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">আপনি কে?</label>
+                    <div class="grid grid-cols-3 gap-2" x-data="{ type: '{{ form.user_type.value|default:'general' }}' }">
+                        <label @click="type='farmer'" :class="type==='farmer' ? 'border-primary-500 bg-primary-50 text-primary-700' : 'border-gray-200 text-gray-500 hover:border-gray-300'"
+                               class="cursor-pointer border-2 rounded-xl p-3 text-center transition-all">
+                            <input type="radio" name="user_type" value="farmer" x-model="type" class="hidden">
+                            <i class="fas fa-seedling text-lg block mb-1"></i>
+                            <span class="text-xs font-semibold">কৃষক</span>
+                        </label>
+                        <label @click="type='trader'" :class="type==='trader' ? 'border-primary-500 bg-primary-50 text-primary-700' : 'border-gray-200 text-gray-500 hover:border-gray-300'"
+                               class="cursor-pointer border-2 rounded-xl p-3 text-center transition-all">
+                            <input type="radio" name="user_type" value="trader" x-model="type" class="hidden">
+                            <i class="fas fa-store text-lg block mb-1"></i>
+                            <span class="text-xs font-semibold">ব্যবসায়ী</span>
+                        </label>
+                        <label @click="type='general'" :class="type==='general' ? 'border-primary-500 bg-primary-50 text-primary-700' : 'border-gray-200 text-gray-500 hover:border-gray-300'"
+                               class="cursor-pointer border-2 rounded-xl p-3 text-center transition-all">
+                            <input type="radio" name="user_type" value="general" x-model="type" class="hidden">
+                            <i class="fas fa-user text-lg block mb-1"></i>
+                            <span class="text-xs font-semibold">সাধারণ</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Passwords -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">পাসওয়ার্ড</label>
+                        <div class="relative" x-data="{ show: false }">
+                            <i class="fas fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300 text-sm"></i>
+                            <input :type="show ? 'text' : 'password'" name="password1" required
+                                   placeholder="••••••••"
+                                   class="w-full pl-10 pr-10 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition {% if form.password1.errors %}border-red-300 bg-red-50{% else %}border-gray-200{% endif %}">
+                            <button type="button" @click="show=!show" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                <i :class="show ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-sm"></i>
+                            </button>
+                        </div>
+                        {% if form.password1.errors %}<p class="text-xs text-red-500 mt-1">{{ form.password1.errors.0 }}</p>{% endif %}
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">পাসওয়ার্ড নিশ্চিত করুন</label>
+                        <div class="relative">
+                            <i class="fas fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300 text-sm"></i>
+                            <input type="password" name="password2" required
+                                   placeholder="••••••••"
+                                   class="w-full pl-10 pr-4 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition {% if form.password2.errors %}border-red-300 bg-red-50{% else %}border-gray-200{% endif %}">
+                        </div>
+                        {% if form.password2.errors %}<p class="text-xs text-red-500 mt-1">{{ form.password2.errors.0 }}</p>{% endif %}
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition shadow-sm text-sm flex items-center justify-center gap-2">
+                    <i class="fas fa-user-plus"></i> ফ্রি অ্যাকাউন্ট তৈরি করুন
                 </button>
+
+                <p class="text-center text-xs text-gray-400">
+                    <i class="fas fa-shield-alt mr-1"></i> আপনার তথ্য সম্পূর্ণ নিরাপদ
+                </p>
             </form>
+
+            <div class="mt-6 pt-5 border-t border-gray-100 text-center">
+                <p class="text-sm text-gray-500">
+                    ইতিমধ্যে অ্যাকাউন্ট আছে?
+                    <a href="{% url 'accounts:login' %}" class="text-primary-600 font-semibold hover:underline ml-1">লগইন করুন</a>
+                </p>
+            </div>
         </div>
 
-        <p class="text-center text-sm text-gray-500 mt-4">
-            ইতিমধ্যে অ্যাকাউন্ট আছে?
-            <a href="{% url 'accounts:login' %}" class="text-primary-600 font-medium hover:underline">লগইন করুন</a>
-        </p>
     </div>
 </section>
 {% endblock %}
