@@ -3,6 +3,7 @@ from decimal import Decimal
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Min, Max, Q
+from core.pagination import paginate
 from django.shortcuts import render
 
 from .models import Video, VideoCategory, PriceAlert
@@ -19,9 +20,11 @@ def video_list(request):
         videos = videos.filter(category__slug=category_slug)
 
     categories = VideoCategory.objects.all()
+    page_obj = paginate(request, videos, per_page=9)
 
     context = {
-        'videos': videos,
+        'videos': page_obj,
+        'page_obj': page_obj,
         'categories': categories,
         'selected_category': category_slug,
     }

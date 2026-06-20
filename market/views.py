@@ -3,6 +3,7 @@ from collections import defaultdict
 
 from django.db.models import Avg, Min, Max
 from django.shortcuts import render, get_object_or_404
+from core.pagination import paginate
 from django.utils import timezone
 
 from .models import (
@@ -60,9 +61,11 @@ def daily_prices(request):
             entry['count'] += 1
 
     product_list = sorted(product_data.values(), key=lambda x: x['product'].category.order)
+    page_obj = paginate(request, product_list, per_page=25)
 
     context = {
-        'prices': product_list,
+        'prices': page_obj,
+        'page_obj': page_obj,
         'price_date': price_date,
         'is_today': is_today,
         'categories': ProductCategory.objects.all(),
@@ -246,9 +249,11 @@ def market_detail(request, slug):
             'govt_price': govt.price if govt else None,
         })
 
+    page_obj = paginate(request, price_list, per_page=25)
     context = {
         'market': market,
-        'prices': price_list,
+        'prices': page_obj,
+        'page_obj': page_obj,
         'price_date': price_date,
     }
     return render(request, 'market/market_detail.html', context)
@@ -278,9 +283,11 @@ def product_detail(request, slug):
                 'avg_max': round(agg['avg_max'], 2),
             })
 
+    page_obj = paginate(request, prices_by_market, per_page=25)
     context = {
         'product': product,
-        'prices_by_market': prices_by_market,
+        'prices_by_market': page_obj,
+        'page_obj': page_obj,
         'division_summary': division_summary,
         'govt_price': govt,
         'price_date': price_date,

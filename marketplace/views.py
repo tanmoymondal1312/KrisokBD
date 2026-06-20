@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Count, Q
 from django.shortcuts import render, redirect, get_object_or_404
+from core.pagination import paginate
 
 from .models import BuySellPost, Rating
 from .forms import PostForm, RatingForm
@@ -27,8 +28,11 @@ def post_list(request):
     from market.models import ProductCategory
     categories = ProductCategory.objects.all()
 
+    page_obj = paginate(request, posts, per_page=12)
+
     context = {
-        'posts': posts,
+        'posts': page_obj,
+        'page_obj': page_obj,
         'categories': categories,
         'selected_type': post_type,
         'selected_category': category,
@@ -90,9 +94,11 @@ def profile_list(request):
         users = users.filter(Q(first_name__icontains=q) | Q(username__icontains=q) | Q(district__icontains=q))
 
     users = users.order_by('-is_verified', '-avg_rating')
+    page_obj = paginate(request, users, per_page=12)
 
     context = {
-        'users': users,
+        'users': page_obj,
+        'page_obj': page_obj,
         'selected_type': user_type,
         'search_query': q,
     }

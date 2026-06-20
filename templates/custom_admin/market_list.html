@@ -1,6 +1,8 @@
 {% extends "custom_admin/base.html" %}
-{% block title %}বাজার{% endblock %}
-{% block page_title %}বাজার ব্যবস্থাপনা{% endblock %}
+{% block title %}বাজার
+{% endblock %}
+{% block page_title %}বাজার ব্যবস্থাপনা
+{% endblock %}
 
 {% block content %}
 <div class="flex justify-end mb-6">
@@ -28,4 +30,5 @@
         </table>
     </div>
 </div>
+{% include "components/pagination.html" %}
 {% endblock %}

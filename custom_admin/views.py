@@ -3,6 +3,7 @@ from functools import wraps
 
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from core.pagination import paginate
 from django.db.models import Count, Avg, Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
@@ -53,9 +54,10 @@ def price_list(request):
     prices = MarketPrice.objects.filter(date=price_date).select_related(
         'product', 'market', 'market__district__division'
     ).order_by('product__name', 'market__name')
+    page_obj = paginate(request, prices, per_page=30)
     markets = Market.objects.filter(is_active=True)
     products = Product.objects.filter(is_active=True)
-    context = {'prices': prices, 'markets': markets, 'products': products, 'price_date': price_date}
+    context = {'prices': page_obj, 'page_obj': page_obj, 'markets': markets, 'products': products, 'price_date': price_date}
     return render(request, 'custom_admin/price_list.html', context)
 
 
@@ -96,8 +98,9 @@ def price_delete(request, pk):
 @admin_required
 def product_list(request):
     products = Product.objects.select_related('category').all()
+    page_obj = paginate(request, products, per_page=25)
     categories = ProductCategory.objects.all()
-    return render(request, 'custom_admin/product_list.html', {'products': products, 'categories': categories})
+    return render(request, 'custom_admin/product_list.html', {'products': page_obj, 'page_obj': page_obj, 'categories': categories})
 
 
 @admin_required
@@ -144,7 +147,8 @@ def product_delete(request, pk):
 @admin_required
 def market_list(request):
     markets = Market.objects.select_related('district__division').all()
-    return render(request, 'custom_admin/market_list.html', {'markets': markets})
+    page_obj = paginate(request, markets, per_page=25)
+    return render(request, 'custom_admin/market_list.html', {'markets': page_obj, 'page_obj': page_obj})
 
 
 @admin_required
@@ -196,7 +200,8 @@ def user_list(request):
     ).order_by('-date_joined')
     if q:
         users = users.filter(Q(first_name__icontains=q) | Q(username__icontains=q) | Q(phone__icontains=q))
-    return render(request, 'custom_admin/user_list.html', {'users': users, 'search_query': q})
+    page_obj = paginate(request, users, per_page=25)
+    return render(request, 'custom_admin/user_list.html', {'users': page_obj, 'page_obj': page_obj, 'search_query': q})
 
 
 @admin_required
@@ -217,7 +222,8 @@ def post_list(request):
     posts = BuySellPost.objects.select_related('user', 'category').all()
     if status_filter:
         posts = posts.filter(status=status_filter)
-    return render(request, 'custom_admin/post_list.html', {'posts': posts, 'status_filter': status_filter})
+    page_obj = paginate(request, posts, per_page=20)
+    return render(request, 'custom_admin/post_list.html', {'posts': page_obj, 'page_obj': page_obj, 'status_filter': status_filter})
 
 
 @admin_required
@@ -243,7 +249,8 @@ def post_reject(request, pk):
 @admin_required
 def video_list(request):
     videos = Video.objects.select_related('category').all()
-    return render(request, 'custom_admin/video_list.html', {'videos': videos})
+    page_obj = paginate(request, videos, per_page=12)
+    return render(request, 'custom_admin/video_list.html', {'videos': page_obj, 'page_obj': page_obj})
 
 
 @admin_required
@@ -275,7 +282,8 @@ def video_delete(request, pk):
 @admin_required
 def govt_price_list(request):
     prices = GovernmentPrice.objects.select_related('product').all()
-    return render(request, 'custom_admin/govt_price_list.html', {'prices': prices})
+    page_obj = paginate(request, prices, per_page=25)
+    return render(request, 'custom_admin/govt_price_list.html', {'prices': page_obj, 'page_obj': page_obj})
 
 
 @admin_required

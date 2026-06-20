@@ -1,6 +1,8 @@
 {% extends "custom_admin/base.html" %}
-{% block title %}ভিডিও{% endblock %}
-{% block page_title %}ভিডিও ব্যবস্থাপনা{% endblock %}
+{% block title %}ভিডিও
+{% endblock %}
+{% block page_title %}ভিডিও ব্যবস্থাপনা
+{% endblock %}
 
 {% block content %}
 <div class="flex justify-end mb-6">
@@ -29,4 +31,5 @@
     </div>
     {% endfor %}
 </div>
+{% include "components/pagination.html" %}
 {% endblock %}
