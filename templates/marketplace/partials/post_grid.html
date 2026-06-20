@@ -1,45 +1,129 @@
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
     {% for post in posts %}
-    <a href="{% url 'marketplace:post_detail' post.pk %}" class="group bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-200 transition-all duration-300 overflow-hidden">
-        {% if post.image %}
-        <div class="h-44 overflow-hidden bg-gray-100">
-            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+
+    {% if post.post_type == 'sell' %}
+    <!-- ===== SELL CARD (Green accent) ===== -->
+    <a href="{% url 'marketplace:post_detail' post.pk %}" class="group bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-green-300 transition-all duration-300 overflow-hidden">
+        <div class="relative">
+            {% if post.image %}
+            <div class="h-48 overflow-hidden bg-gray-100">
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            {% else %}
+            <div class="h-48 bg-gradient-to-br from-green-50 via-emerald-50 to-primary-50 flex items-center justify-center">
+                <i class="fas fa-seedling text-5xl text-green-200"></i>
+            </div>
+            {% endif %}
+            <!-- Sell Badge -->
+            <div class="absolute top-3 left-3">
+                <span class="px-2.5 py-1 bg-green-600 text-white text-xs font-bold rounded-lg shadow-sm">
+                    <i class="fas fa-tags mr-1"></i>বিক্রয়
+                </span>
+            </div>
+            <!-- Price Tag -->
+            <div class="absolute bottom-3 right-3">
+                <span class="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-green-700 text-sm font-bold rounded-lg shadow">
+                    ৳{{ post.price|floatformat:0 }}<span class="text-xs font-normal text-gray-500">/{{ post.unit }}</span>
+                </span>
+            </div>
         </div>
-        {% else %}
-        <div class="h-44 bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center">
-            <i class="fas fa-seedling text-5xl text-primary-300"></i>
-        </div>
-        {% endif %}
 
         <div class="p-4">
-            <div class="flex items-center gap-2 mb-2">
-                <span class="px-2 py-0.5 text-xs font-medium rounded-full {% if post.post_type == 'sell' %}bg-green-100 text-green-700{% else %}bg-blue-100 text-blue-700{% endif %}">
-                    {% if post.post_type == 'sell' %}বিক্রয়{% else %}ক্রয়{% endif %}
-                </span>
-                {% if post.category %}
-                <span class="text-xs text-gray-400">{{ post.category.name }}</span>
+            {% if post.category %}
+            <span class="text-[11px] text-green-600 bg-green-50 px-2 py-0.5 rounded-full font-medium">{{ post.category.name }}</span>
+            {% endif %}
+            <h3 class="font-semibold text-gray-800 text-[15px] mt-1.5 group-hover:text-green-700 transition line-clamp-2 leading-snug">{{ post.title }}</h3>
+
+            {% if post.description %}
+            <p class="text-xs text-gray-400 mt-1.5 line-clamp-2 leading-relaxed">{{ post.description|truncatechars:80 }}</p>
+            {% endif %}
+
+            <div class="flex items-center gap-2 mt-1.5">
+                <i class="fas fa-box-open text-gray-300 text-xs"></i>
+                <span class="text-xs text-gray-500">পরিমাণ: {{ post.quantity }}</span>
+                {% if post.location %}
+                <span class="text-gray-300">•</span>
+                <i class="fas fa-map-marker-alt text-gray-300 text-xs"></i>
+                <span class="text-xs text-gray-500">{{ post.location }}</span>
                 {% endif %}
-            </div>
-
-            <h3 class="font-semibold text-gray-800 text-sm group-hover:text-primary-700 transition line-clamp-2">{{ post.title }}</h3>
-
-            <div class="flex items-center justify-between mt-3">
-                <span class="text-lg font-bold text-primary-700">৳{{ post.price|floatformat:0 }}<span class="text-xs font-normal text-gray-400">/{{ post.unit }}</span></span>
-                <span class="text-xs text-gray-400">{{ post.quantity }}</span>
             </div>
 
             <div class="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100">
-                <div class="w-6 h-6 bg-primary-100 text-primary-700 rounded-full flex items-center justify-center text-xs font-bold">
-                    {{ post.user.first_name|first|default:post.user.username|first }}
+                {% if post.user.avatar %}
+                <img src="{{ post.user.avatar.url }}" class="w-6 h-6 rounded-full object-cover">
+                {% else %}
+                <div class="w-6 h-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-xs font-bold">
+                    {{ post.user.first_name|first }}
                 </div>
-                <span class="text-xs text-gray-500">{{ post.user.first_name|default:post.user.username }}</span>
-                {% if post.user.is_verified %}
-                <i class="fas fa-check-circle text-primary-500 text-xs"></i>
                 {% endif %}
-                <span class="text-xs text-gray-400 ml-auto">{{ post.created_at|timesince }} আগে</span>
+                <span class="text-xs font-medium text-gray-600">{{ post.user.first_name|default:post.user.username }}</span>
+                {% if post.user.is_verified %}<i class="fas fa-check-circle text-green-500 text-xs"></i>{% endif %}
+                <span class="text-[11px] text-gray-400 ml-auto"><i class="far fa-clock mr-0.5"></i>{{ post.created_at|timesince }} আগে</span>
             </div>
         </div>
     </a>
+
+    {% else %}
+    <!-- ===== BUY CARD (Blue accent, different layout) ===== -->
+    <a href="{% url 'marketplace:post_detail' post.pk %}" class="group bg-gradient-to-br from-blue-50 to-white rounded-2xl shadow-sm border-2 border-blue-100 hover:shadow-xl hover:border-blue-300 transition-all duration-300 overflow-hidden">
+        <div class="p-5">
+            <!-- Buy Badge + Category -->
+            <div class="flex items-center justify-between mb-3">
+                <span class="px-2.5 py-1 bg-blue-600 text-white text-xs font-bold rounded-lg shadow-sm">
+                    <i class="fas fa-bullhorn mr-1"></i>চাহিদা
+                </span>
+                {% if post.category %}
+                <span class="text-[11px] text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full font-medium">{{ post.category.name }}</span>
+                {% endif %}
+            </div>
+
+            <h3 class="font-bold text-gray-800 text-[15px] group-hover:text-blue-700 transition line-clamp-2 leading-snug">{{ post.title }}</h3>
+
+            {% if post.description %}
+            <p class="text-xs text-gray-500 mt-2 line-clamp-2 leading-relaxed">{{ post.description|truncatechars:100 }}</p>
+            {% endif %}
+
+            <!-- Price & Quantity -->
+            <div class="mt-3 flex items-center gap-3">
+                <div class="flex-1 bg-white rounded-xl p-3 border border-blue-100 text-center">
+                    <p class="text-[10px] text-gray-400 uppercase tracking-wide">বাজেট</p>
+                    <p class="text-lg font-bold text-blue-700">৳{{ post.price|floatformat:0 }}<span class="text-xs font-normal text-gray-400">/{{ post.unit }}</span></p>
+                </div>
+                <div class="flex-1 bg-white rounded-xl p-3 border border-blue-100 text-center">
+                    <p class="text-[10px] text-gray-400 uppercase tracking-wide">পরিমাণ</p>
+                    <p class="text-sm font-bold text-gray-700">{{ post.quantity }}</p>
+                </div>
+            </div>
+
+            {% if post.location %}
+            <div class="mt-2.5 flex items-center gap-1.5 text-xs text-blue-500">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>{{ post.location }} এ ডেলিভারি</span>
+            </div>
+            {% endif %}
+
+            {% if post.image %}
+            <div class="mt-3 h-28 rounded-xl overflow-hidden">
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            {% endif %}
+
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-blue-100">
+                {% if post.user.avatar %}
+                <img src="{{ post.user.avatar.url }}" class="w-6 h-6 rounded-full object-cover">
+                {% else %}
+                <div class="w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">
+                    {{ post.user.first_name|first }}
+                </div>
+                {% endif %}
+                <span class="text-xs font-medium text-gray-600">{{ post.user.first_name|default:post.user.username }}</span>
+                {% if post.user.is_verified %}<i class="fas fa-check-circle text-blue-500 text-xs"></i>{% endif %}
+                <span class="text-[11px] text-gray-400 ml-auto"><i class="far fa-clock mr-0.5"></i>{{ post.created_at|timesince }} আগে</span>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+
     {% empty %}
     <div class="sm:col-span-2 lg:col-span-3 text-center py-16 text-gray-400">
         <i class="fas fa-store text-5xl mb-3 block"></i>
