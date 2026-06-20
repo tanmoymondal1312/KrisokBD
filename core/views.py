@@ -10,6 +10,7 @@ from django.shortcuts import render
 from market.models import (
     MarketPrice, PopularMarket, GovernmentPrice, Product, Market,
 )
+from marketplace.models import BuySellPost
 
 
 def home(request):
@@ -72,6 +73,14 @@ def home(request):
         is_featured=True
     ).select_related('market', 'market__district', 'market__district__division')
 
+    farmer_posts = BuySellPost.objects.filter(
+        status='approved', user__user_type='farmer'
+    ).select_related('user', 'category').order_by('-created_at')[:3]
+
+    trader_posts = BuySellPost.objects.filter(
+        status='approved', user__user_type='trader'
+    ).select_related('user', 'category').order_by('-created_at')[:2]
+
     context = {
         'stats': {
             'today_visitors': 200,
@@ -87,5 +96,7 @@ def home(request):
         'is_today': latest_date == today,
         'popular_markets': popular_markets,
         'top_change': top_change,
+        'farmer_posts': farmer_posts,
+        'trader_posts': trader_posts,
     }
     return render(request, 'core/home.html', context)
