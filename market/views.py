@@ -51,13 +51,23 @@ def daily_prices(request):
                 'product_type': p.product_type or 'দেশি',
                 'min_price': p.min_price,
                 'max_price': p.max_price,
+                'min_market': p.market,
+                'max_market': p.market,
+                'min_updated_at': p.updated_at,
+                'max_updated_at': p.updated_at,
                 'govt_price': govt.price if govt else None,
                 'count': 1,
             }
         else:
             entry = product_data[key]
-            entry['min_price'] = min(entry['min_price'], p.min_price)
-            entry['max_price'] = max(entry['max_price'], p.max_price)
+            if p.min_price < entry['min_price']:
+                entry['min_price'] = p.min_price
+                entry['min_market'] = p.market
+                entry['min_updated_at'] = p.updated_at
+            if p.max_price > entry['max_price']:
+                entry['max_price'] = p.max_price
+                entry['max_market'] = p.market
+                entry['max_updated_at'] = p.updated_at
             entry['count'] += 1
 
     product_list = sorted(product_data.values(), key=lambda x: x['product'].category.order)

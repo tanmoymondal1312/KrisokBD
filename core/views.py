@@ -25,7 +25,7 @@ def home(request):
     ).distinct().count()
 
     prices_qs = MarketPrice.objects.filter(date=latest_date).select_related(
-        'product', 'product__category'
+        'product', 'product__category', 'market', 'market__district'
     )
 
     product_data = {}
@@ -38,12 +38,21 @@ def home(request):
                 'product_type': p.product_type or 'দেশি',
                 'min_price': p.min_price,
                 'max_price': p.max_price,
+                'min_market': p.market,
+                'max_market': p.market,
+                'min_updated_at': p.updated_at,
+                'max_updated_at': p.updated_at,
                 'govt_price': govt.price if govt else None,
-                'updated_at': p.updated_at,
             }
         else:
-            product_data[key]['min_price'] = min(product_data[key]['min_price'], p.min_price)
-            product_data[key]['max_price'] = max(product_data[key]['max_price'], p.max_price)
+            if p.min_price < product_data[key]['min_price']:
+                product_data[key]['min_price'] = p.min_price
+                product_data[key]['min_market'] = p.market
+                product_data[key]['min_updated_at'] = p.updated_at
+            if p.max_price > product_data[key]['max_price']:
+                product_data[key]['max_price'] = p.max_price
+                product_data[key]['max_market'] = p.market
+                product_data[key]['max_updated_at'] = p.updated_at
 
     recent_prices = sorted(product_data.values(), key=lambda x: x['product'].category.order)[:10]
 

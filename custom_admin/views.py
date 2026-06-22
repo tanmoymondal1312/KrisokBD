@@ -32,6 +32,38 @@ def admin_required(view_func):
 @admin_required
 def dashboard(request):
     today = date.today()
+
+    latest_date = MarketPrice.objects.order_by('-date').values_list('date', flat=True).first() or today
+    prices_qs = MarketPrice.objects.filter(date=latest_date).select_related(
+        'product', 'product__category', 'market', 'market__district'
+    )
+    product_data = {}
+    for p in prices_qs:
+        key = p.product_id
+        if key not in product_data:
+            govt = GovernmentPrice.objects.filter(product=p.product).first()
+            product_data[key] = {
+                'product': p.product,
+                'product_type': p.product_type or 'দেশি',
+                'min_price': p.min_price,
+                'max_price': p.max_price,
+                'min_market': p.market,
+                'max_market': p.market,
+                'min_updated_at': p.updated_at,
+                'max_updated_at': p.updated_at,
+                'govt_price': govt.price if govt else None,
+            }
+        else:
+            if p.min_price < product_data[key]['min_price']:
+                product_data[key]['min_price'] = p.min_price
+                product_data[key]['min_market'] = p.market
+                product_data[key]['min_updated_at'] = p.updated_at
+            if p.max_price > product_data[key]['max_price']:
+                product_data[key]['max_price'] = p.max_price
+                product_data[key]['max_market'] = p.market
+                product_data[key]['max_updated_at'] = p.updated_at
+    recent_prices = sorted(product_data.values(), key=lambda x: x['product'].category.order)[:10]
+
     context = {
         'total_users': User.objects.filter(is_staff=False).count(),
         'total_products': Product.objects.count(),
@@ -42,6 +74,8 @@ def dashboard(request):
         'verified_users': User.objects.filter(is_verified=True).count(),
         'recent_users': User.objects.filter(is_staff=False).order_by('-date_joined')[:5],
         'recent_posts': BuySellPost.objects.order_by('-created_at')[:5],
+        'recent_prices': recent_prices,
+        'price_date': latest_date,
     }
     return render(request, 'custom_admin/dashboard.html', context)
 

@@ -74,6 +74,52 @@
     </div>
 </div>
 
+<!-- Today's Market Prices -->
+<div class="bg-white rounded-xl border border-gray-200 mt-6">
+    <div class="px-5 py-3 border-b flex items-center justify-between">
+        <h3 class="font-semibold text-gray-800">আজকের বাজার দর <span class="text-xs text-gray-400 font-normal">({{ price_date|date:"d M, Y" }})</span></h3>
+        <a href="{% url 'custom_admin:price_list' %}" class="text-xs text-primary-600 hover:underline">সব দেখুন</a>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead>
+                <tr class="bg-gray-50 text-gray-600">
+                    <th class="px-4 py-2.5 text-left text-xs font-semibold">পণ্যের নাম</th>
+                    <th class="px-4 py-2.5 text-left text-xs font-semibold">পণ্যের ধরণ</th>
+                    <th class="px-4 py-2.5 text-left text-xs font-semibold">সর্বনিম্ন মূল্য - হালনাগাদের সময়</th>
+                    <th class="px-4 py-2.5 text-left text-xs font-semibold">সর্বোচ্চ মূল্য - হালনাগাদের সময়</th>
+                    <th class="px-4 py-2.5 text-center text-xs font-semibold">সরকারি মূল্য</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for item in recent_prices %}
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-4 py-2.5">
+                        <span class="text-sm font-medium text-gray-800">{{ item.product.name }}</span>
+                    </td>
+                    <td class="px-4 py-2.5 text-sm text-gray-500">{{ item.product_type }}</td>
+                    <td class="px-4 py-2.5">
+                        <span class="text-sm font-medium text-green-700">{{ item.min_price|floatformat:0 }} / {{ item.product.unit }}</span>
+                        <span class="text-xs text-gray-400 block">({{ item.min_market.name }}) - {{ item.min_updated_at|time:"h:i A" }}</span>
+                    </td>
+                    <td class="px-4 py-2.5">
+                        <span class="text-sm font-medium text-red-600">{{ item.max_price|floatformat:0 }} / {{ item.product.unit }}</span>
+                        <span class="text-xs text-gray-400 block">({{ item.max_market.name }}) - {{ item.max_updated_at|time:"h:i A" }}</span>
+                    </td>
+                    <td class="px-4 py-2.5 text-center text-sm text-gray-400">
+                        {% if item.govt_price %}{{ item.govt_price|floatformat:0 }} / {{ item.product.unit }}{% else %}0 / {{ item.product.unit }}{% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="px-4 py-6 text-center text-gray-400">কোনো দর পাওয়া যায়নি</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <!-- Quick Actions -->
 <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
     <a href="{% url 'custom_admin:price_add' %}" class="bg-white rounded-xl border border-gray-200 p-4 text-center hover:shadow-md transition">
