@@ -1,6 +1,6 @@
 {% extends "custom_admin/base.html" %}
-{% block title %}দর যোগ{% endblock %}
-{% block page_title %}বাজার দর যোগ করুন{% endblock %}
+{% block title %}{% if price %}দর সম্পাদনা{% else %}দর যোগ{% endif %}{% endblock %}
+{% block page_title %}{% if price %}বাজার দর সম্পাদনা{% else %}বাজার দর যোগ করুন{% endif %}{% endblock %}
 
 {% block content %}
 <div class="max-w-2xl">
@@ -11,28 +11,28 @@
                 <label class="block text-sm font-medium text-gray-700 mb-1">পণ্য</label>
                 <select name="product" required class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm">
                     <option value="">-- পণ্য নির্বাচন --</option>
-                    {% for p in products %}<option value="{{ p.pk }}">{{ p.name }} ({{ p.name_en }})</option>{% endfor %}
+                    {% for p in products %}<option value="{{ p.pk }}" {% if price and price.product_id == p.pk %}selected{% endif %}>{{ p.name }} ({{ p.name_en }})</option>{% endfor %}
                 </select>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">বাজার</label>
                 <select name="market" required class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm">
                     <option value="">-- বাজার নির্বাচন --</option>
-                    {% for m in markets %}<option value="{{ m.pk }}">{{ m.name }} ({{ m.district.division.name }})</option>{% endfor %}
+                    {% for m in markets %}<option value="{{ m.pk }}" {% if price and price.market_id == m.pk %}selected{% endif %}>{{ m.name }} ({{ m.district.division.name }})</option>{% endfor %}
                 </select>
             </div>
             <div><label class="block text-sm font-medium text-gray-700 mb-1">তারিখ</label>
-                <input type="date" name="date" value="{{ today }}" required class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></div>
+                <input type="date" name="date" value="{% if price %}{{ price.date|date:'Y-m-d' }}{% else %}{{ today }}{% endif %}" required class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></div>
             <div class="grid grid-cols-2 gap-4">
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">সর্বনিম্ন মূল্য (৳)</label>
-                    <input type="number" name="min_price" step="0.01" required placeholder="0.00" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></div>
+                    <input type="number" name="min_price" step="0.01" required placeholder="0.00" value="{% if price %}{{ price.min_price }}{% endif %}" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">সর্বোচ্চ মূল্য (৳)</label>
-                    <input type="number" name="max_price" step="0.01" required placeholder="0.00" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></div>
+                    <input type="number" name="max_price" step="0.01" required placeholder="0.00" value="{% if price %}{{ price.max_price }}{% endif %}" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></div>
             </div>
             <div><label class="block text-sm font-medium text-gray-700 mb-1">পণ্যের ধরণ</label>
-                <input type="text" name="product_type" value="দেশি" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></div>
+                <input type="text" name="product_type" value="{% if price %}{{ price.product_type }}{% else %}দেশি{% endif %}" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm"></div>
             <div class="flex gap-3 pt-2">
-                <button type="submit" class="px-6 py-2.5 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition"><i class="fas fa-save mr-1"></i> সংরক্ষণ</button>
+                <button type="submit" class="px-6 py-2.5 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition"><i class="fas fa-save mr-1"></i> {% if price %}আপডেট{% else %}সংরক্ষণ{% endif %}</button>
                 <a href="{% url 'custom_admin:price_list' %}" class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">বাতিল</a>
             </div>
         </form>

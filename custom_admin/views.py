@@ -120,6 +120,28 @@ def price_add(request):
 
 
 @admin_required
+def price_edit(request, pk):
+    price = get_object_or_404(MarketPrice, pk=pk)
+    if request.method == 'POST':
+        price.product = get_object_or_404(Product, pk=request.POST.get('product'))
+        price.market = get_object_or_404(Market, pk=request.POST.get('market'))
+        price.date = request.POST.get('date', str(date.today()))
+        price.min_price = request.POST.get('min_price')
+        price.max_price = request.POST.get('max_price')
+        price.product_type = request.POST.get('product_type', 'দেশি')
+        price.avg_price = None
+        price.save()
+        messages.success(request, f'{price.product.name} — {price.market.name} এর দর আপডেট হয়েছে।')
+        return redirect('custom_admin:price_list')
+
+    markets = Market.objects.filter(is_active=True).select_related('district__division')
+    products = Product.objects.filter(is_active=True).select_related('category')
+    return render(request, 'custom_admin/price_form.html', {
+        'price': price, 'markets': markets, 'products': products, 'today': str(date.today())
+    })
+
+
+@admin_required
 def price_delete(request, pk):
     price = get_object_or_404(MarketPrice, pk=pk)
     price.delete()

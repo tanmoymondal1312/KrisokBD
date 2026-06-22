@@ -30,8 +30,9 @@
                     <td class="px-4 py-3 text-gray-400">{{ p.market.district.division.name }}</td>
                     <td class="px-4 py-3 text-center text-green-700">৳{{ p.min_price|floatformat:0 }}</td>
                     <td class="px-4 py-3 text-center text-red-600">৳{{ p.max_price|floatformat:0 }}</td>
-                    <td class="px-4 py-3 text-center">
-                        <a href="{% url 'custom_admin:price_delete' p.pk %}" onclick="return confirm('মুছে ফেলতে চান?')" class="text-red-500 hover:text-red-700 text-xs"><i class="fas fa-trash"></i></a>
+                    <td class="px-4 py-3 text-center flex items-center justify-center gap-3">
+                        <a href="{% url 'custom_admin:price_edit' p.pk %}" class="text-blue-500 hover:text-blue-700 text-xs" title="সম্পাদনা"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'custom_admin:price_delete' p.pk %}" onclick="return confirm('মুছে ফেলতে চান?')" class="text-red-500 hover:text-red-700 text-xs" title="মুছুন"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
                 {% empty %}
