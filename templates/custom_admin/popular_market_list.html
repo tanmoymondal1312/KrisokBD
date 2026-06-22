@@ -5,34 +5,34 @@
 {% block content %}
 <!-- Add Market -->
 {% if available_markets %}
-<div class="bg-white rounded-xl border border-gray-200 p-4 mb-6">
-    <form method="POST" action="{% url 'custom_admin:popular_market_add' %}" class="flex flex-wrap items-end gap-3">
+<div class="bg-white rounded-xl border border-gray-200 p-3 sm:p-4 mb-4 sm:mb-6">
+    <form method="POST" action="{% url 'custom_admin:popular_market_add' %}" class="flex flex-col sm:flex-row items-stretch sm:items-end gap-3">
         {% csrf_token %}
-        <div class="flex-1 min-w-[200px]">
+        <div class="flex-1">
             <label class="block text-xs text-gray-500 mb-1">বাজার যোগ করুন</label>
             <select name="market" required class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm">
                 {% for m in available_markets %}<option value="{{ m.pk }}">{{ m.name }} ({{ m.district.division.name }})</option>{% endfor %}
             </select>
         </div>
-        <button type="submit" class="px-4 py-2 bg-primary-600 text-white text-sm rounded-lg hover:bg-primary-700 transition"><i class="fas fa-plus mr-1"></i> যোগ করুন</button>
+        <button type="submit" class="px-4 py-2 bg-primary-600 text-white text-sm rounded-lg hover:bg-primary-700 transition shrink-0"><i class="fas fa-plus mr-1"></i> যোগ করুন</button>
     </form>
 </div>
 {% endif %}
 
 <!-- Current Popular Markets -->
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
     {% for pm in popular %}
-    <div class="bg-white rounded-xl border border-gray-200 p-4 flex items-center justify-between">
-        <div>
-            <p class="font-medium text-gray-800 text-sm">{{ pm.market.name }}</p>
-            <p class="text-xs text-gray-400">{{ pm.market.district.division.name }} • ক্রম: {{ pm.order }}</p>
+    <div class="bg-white rounded-xl border border-gray-200 p-3 sm:p-4 flex items-center justify-between gap-2">
+        <div class="min-w-0">
+            <p class="font-medium text-gray-800 text-sm truncate">{{ pm.market.name }}</p>
+            <p class="text-[10px] sm:text-xs text-gray-400 truncate">{{ pm.market.district.division.name }} • ক্রম: {{ pm.order }}</p>
         </div>
-        <a href="{% url 'custom_admin:popular_market_remove' pm.pk %}" onclick="return confirm('সরাতে চান?')" class="text-red-400 hover:text-red-600">
+        <a href="{% url 'custom_admin:popular_market_remove' pm.pk %}" onclick="return confirm('সরাতে চান?')" class="text-red-400 hover:text-red-600 shrink-0">
             <i class="fas fa-times"></i>
         </a>
     </div>
     {% empty %}
-    <div class="sm:col-span-2 md:col-span-4 text-center py-8 text-gray-400">কোনো জনপ্রিয় বাজার যোগ করা হয়নি</div>
+    <div class="sm:col-span-2 md:col-span-3 lg:col-span-4 text-center py-8 text-gray-400">কোনো জনপ্রিয় বাজার যোগ করা হয়নি</div>
     {% endfor %}
 </div>
 {% endblock %}

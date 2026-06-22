@@ -1,28 +1,28 @@
 {% extends "custom_admin/base.html" %}
-{% block title %}সরকারি মূল্য
-{% endblock %}
-{% block page_title %}সরকারি মূল্য ব্যবস্থাপনা
-{% endblock %}
+{% block title %}সরকারি মূল্য{% endblock %}
+{% block page_title %}সরকারি মূল্য ব্যবস্থাপনা{% endblock %}
 
 {% block content %}
-<div class="flex justify-end mb-6">
-    <a href="{% url 'custom_admin:govt_price_add' %}" class="px-4 py-2 bg-primary-600 text-white text-sm rounded-lg hover:bg-primary-700 transition"><i class="fas fa-plus mr-1"></i> মূল্য যোগ</a>
+<div class="flex justify-end mb-4 sm:mb-6">
+    <a href="{% url 'custom_admin:govt_price_add' %}" class="px-3 sm:px-4 py-2 bg-primary-600 text-white text-sm rounded-lg hover:bg-primary-700 transition"><i class="fas fa-plus mr-1"></i> মূল্য যোগ</a>
 </div>
 <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
     <div class="overflow-x-auto">
-        <table class="w-full">
+        <table class="w-full min-w-[400px]">
             <thead><tr class="bg-gray-50 text-gray-600 text-xs uppercase">
-                <th class="px-4 py-3 text-left">পণ্য</th><th class="px-4 py-3 text-center">মূল্য (৳)</th><th class="px-4 py-3 text-center">কার্যকর তারিখ</th>
+                <th class="px-3 sm:px-4 py-3 text-left">পণ্য</th>
+                <th class="px-3 sm:px-4 py-3 text-center">মূল্য (৳)</th>
+                <th class="px-3 sm:px-4 py-3 text-center">কার্যকর তারিখ</th>
             </tr></thead>
             <tbody class="divide-y divide-gray-100 text-sm">
                 {% for gp in prices %}
                 <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-3 font-medium">{{ gp.product.name }} <span class="text-gray-400 text-xs">({{ gp.product.name_en }})</span></td>
-                    <td class="px-4 py-3 text-center font-bold text-indigo-700">৳{{ gp.price|floatformat:0 }}</td>
-                    <td class="px-4 py-3 text-center text-gray-500">{{ gp.effective_date|date:"d M, Y" }}</td>
+                    <td class="px-3 sm:px-4 py-3 font-medium whitespace-nowrap">{{ gp.product.name }} <span class="text-gray-400 text-xs">({{ gp.product.name_en }})</span></td>
+                    <td class="px-3 sm:px-4 py-3 text-center font-bold text-indigo-700 whitespace-nowrap">৳{{ gp.price|floatformat:0 }}</td>
+                    <td class="px-3 sm:px-4 py-3 text-center text-gray-500 whitespace-nowrap">{{ gp.effective_date|date:"d M, Y" }}</td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="3" class="px-4 py-8 text-center text-gray-400">কোনো সরকারি মূল্য নেই</td></tr>
+                <tr><td colspan="3" class="px-3 py-8 text-center text-gray-400">কোনো সরকারি মূল্য নেই</td></tr>
                 {% endfor %}
             </tbody>
         </table>

@@ -5,47 +5,47 @@
 
 {% block content %}
 <!-- Stats Grid -->
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-    <div class="bg-white rounded-xl border border-gray-200 p-5">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center"><i class="fas fa-users text-blue-600"></i></div>
-            <div><p class="text-2xl font-bold text-gray-800">{{ total_users }}</p><p class="text-xs text-gray-500">মোট ব্যবহারকারী</p></div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6">
+    <div class="bg-white rounded-xl border border-gray-200 p-3 sm:p-5">
+        <div class="flex items-center gap-2 sm:gap-3">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 bg-blue-100 rounded-lg flex items-center justify-center shrink-0"><i class="fas fa-users text-blue-600 text-sm sm:text-base"></i></div>
+            <div class="min-w-0"><p class="text-xl sm:text-2xl font-bold text-gray-800">{{ total_users }}</p><p class="text-[10px] sm:text-xs text-gray-500 truncate">মোট ব্যবহারকারী</p></div>
         </div>
     </div>
-    <div class="bg-white rounded-xl border border-gray-200 p-5">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center"><i class="fas fa-box text-green-600"></i></div>
-            <div><p class="text-2xl font-bold text-gray-800">{{ total_products }}</p><p class="text-xs text-gray-500">মোট পণ্য</p></div>
+    <div class="bg-white rounded-xl border border-gray-200 p-3 sm:p-5">
+        <div class="flex items-center gap-2 sm:gap-3">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 bg-green-100 rounded-lg flex items-center justify-center shrink-0"><i class="fas fa-box text-green-600 text-sm sm:text-base"></i></div>
+            <div class="min-w-0"><p class="text-xl sm:text-2xl font-bold text-gray-800">{{ total_products }}</p><p class="text-[10px] sm:text-xs text-gray-500 truncate">মোট পণ্য</p></div>
         </div>
     </div>
-    <div class="bg-white rounded-xl border border-gray-200 p-5">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center"><i class="fas fa-tags text-purple-600"></i></div>
-            <div><p class="text-2xl font-bold text-gray-800">{{ total_prices_today }}</p><p class="text-xs text-gray-500">আজকের দর এন্ট্রি</p></div>
+    <div class="bg-white rounded-xl border border-gray-200 p-3 sm:p-5">
+        <div class="flex items-center gap-2 sm:gap-3">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 bg-purple-100 rounded-lg flex items-center justify-center shrink-0"><i class="fas fa-tags text-purple-600 text-sm sm:text-base"></i></div>
+            <div class="min-w-0"><p class="text-xl sm:text-2xl font-bold text-gray-800">{{ total_prices_today }}</p><p class="text-[10px] sm:text-xs text-gray-500 truncate">আজকের দর এন্ট্রি</p></div>
         </div>
     </div>
-    <div class="bg-white rounded-xl border border-gray-200 p-5">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center"><i class="fas fa-clock text-amber-600"></i></div>
-            <div><p class="text-2xl font-bold text-gray-800">{{ pending_posts }}</p><p class="text-xs text-gray-500">অপেক্ষমান পোস্ট</p></div>
+    <div class="bg-white rounded-xl border border-gray-200 p-3 sm:p-5">
+        <div class="flex items-center gap-2 sm:gap-3">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 bg-amber-100 rounded-lg flex items-center justify-center shrink-0"><i class="fas fa-clock text-amber-600 text-sm sm:text-base"></i></div>
+            <div class="min-w-0"><p class="text-xl sm:text-2xl font-bold text-gray-800">{{ pending_posts }}</p><p class="text-[10px] sm:text-xs text-gray-500 truncate">অপেক্ষমান পোস্ট</p></div>
         </div>
     </div>
 </div>
 
-<div class="grid md:grid-cols-2 gap-6">
+<div class="grid md:grid-cols-2 gap-4 sm:gap-6">
     <!-- Recent Users -->
     <div class="bg-white rounded-xl border border-gray-200">
-        <div class="px-5 py-3 border-b flex items-center justify-between">
-            <h3 class="font-semibold text-gray-800">সাম্প্রতিক ব্যবহারকারী</h3>
+        <div class="px-3 sm:px-5 py-3 border-b flex items-center justify-between">
+            <h3 class="font-semibold text-gray-800 text-sm sm:text-base">সাম্প্রতিক ব্যবহারকারী</h3>
             <a href="{% url 'custom_admin:user_list' %}" class="text-xs text-primary-600 hover:underline">সব দেখুন</a>
         </div>
         <div class="divide-y divide-gray-100">
             {% for u in recent_users %}
-            <div class="px-5 py-3 flex items-center gap-3">
-                <div class="w-8 h-8 bg-primary-100 text-primary-700 rounded-full flex items-center justify-center text-xs font-bold">{{ u.first_name|first|default:u.username|first }}</div>
+            <div class="px-3 sm:px-5 py-2.5 sm:py-3 flex items-center gap-2 sm:gap-3">
+                <div class="w-7 h-7 sm:w-8 sm:h-8 bg-primary-100 text-primary-700 rounded-full flex items-center justify-center text-xs font-bold shrink-0">{{ u.first_name|first|default:u.username|first }}</div>
                 <div class="flex-1 min-w-0">
                     <p class="text-sm font-medium text-gray-800 truncate">{{ u.first_name|default:u.username }}{% if u.is_verified %} <i class="fas fa-check-circle text-primary-500 text-xs"></i>{% endif %}</p>
-                    <p class="text-xs text-gray-400">{{ u.get_user_type_display }} • {{ u.date_joined|timesince }} আগে</p>
+                    <p class="text-[10px] sm:text-xs text-gray-400 truncate">{{ u.get_user_type_display }} • {{ u.date_joined|timesince }} আগে</p>
                 </div>
             </div>
             {% endfor %}
@@ -54,18 +54,18 @@
 
     <!-- Recent Posts -->
     <div class="bg-white rounded-xl border border-gray-200">
-        <div class="px-5 py-3 border-b flex items-center justify-between">
-            <h3 class="font-semibold text-gray-800">সাম্প্রতিক পোস্ট</h3>
+        <div class="px-3 sm:px-5 py-3 border-b flex items-center justify-between">
+            <h3 class="font-semibold text-gray-800 text-sm sm:text-base">সাম্প্রতিক পোস্ট</h3>
             <a href="{% url 'custom_admin:post_list' %}" class="text-xs text-primary-600 hover:underline">সব দেখুন</a>
         </div>
         <div class="divide-y divide-gray-100">
             {% for p in recent_posts %}
-            <div class="px-5 py-3 flex items-center justify-between">
+            <div class="px-3 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between gap-2">
                 <div class="min-w-0">
                     <p class="text-sm font-medium text-gray-800 truncate">{{ p.title }}</p>
-                    <p class="text-xs text-gray-400">{{ p.user.first_name|default:p.user.username }} • {{ p.created_at|timesince }} আগে</p>
+                    <p class="text-[10px] sm:text-xs text-gray-400 truncate">{{ p.user.first_name|default:p.user.username }} • {{ p.created_at|timesince }} আগে</p>
                 </div>
-                <span class="px-2 py-0.5 text-xs rounded-full shrink-0 {% if p.status == 'pending' %}bg-amber-100 text-amber-700{% elif p.status == 'approved' %}bg-green-100 text-green-700{% else %}bg-gray-100 text-gray-500{% endif %}">
+                <span class="px-2 py-0.5 text-[10px] sm:text-xs rounded-full shrink-0 {% if p.status == 'pending' %}bg-amber-100 text-amber-700{% elif p.status == 'approved' %}bg-green-100 text-green-700{% else %}bg-gray-100 text-gray-500{% endif %}">
                     {{ p.get_status_display }}
                 </span>
             </div>
@@ -75,44 +75,44 @@
 </div>
 
 <!-- Today's Market Prices -->
-<div class="bg-white rounded-xl border border-gray-200 mt-6">
-    <div class="px-5 py-3 border-b flex items-center justify-between">
-        <h3 class="font-semibold text-gray-800">আজকের বাজার দর <span class="text-xs text-gray-400 font-normal">({{ price_date|date:"d M, Y" }})</span></h3>
+<div class="bg-white rounded-xl border border-gray-200 mt-4 sm:mt-6">
+    <div class="px-3 sm:px-5 py-3 border-b flex items-center justify-between">
+        <h3 class="font-semibold text-gray-800 text-sm sm:text-base">আজকের বাজার দর <span class="text-[10px] sm:text-xs text-gray-400 font-normal">({{ price_date|date:"d M, Y" }})</span></h3>
         <a href="{% url 'custom_admin:price_list' %}" class="text-xs text-primary-600 hover:underline">সব দেখুন</a>
     </div>
     <div class="overflow-x-auto">
-        <table class="w-full">
+        <table class="w-full min-w-[700px]">
             <thead>
                 <tr class="bg-gray-50 text-gray-600">
-                    <th class="px-4 py-2.5 text-left text-xs font-semibold">পণ্যের নাম</th>
-                    <th class="px-4 py-2.5 text-left text-xs font-semibold">পণ্যের ধরণ</th>
-                    <th class="px-4 py-2.5 text-left text-xs font-semibold">সর্বনিম্ন মূল্য - হালনাগাদের সময়</th>
-                    <th class="px-4 py-2.5 text-left text-xs font-semibold">সর্বোচ্চ মূল্য - হালনাগাদের সময়</th>
-                    <th class="px-4 py-2.5 text-center text-xs font-semibold">সরকারি মূল্য</th>
+                    <th class="px-3 sm:px-4 py-2.5 text-left text-xs font-semibold">পণ্যের নাম</th>
+                    <th class="px-3 sm:px-4 py-2.5 text-left text-xs font-semibold">পণ্যের ধরণ</th>
+                    <th class="px-3 sm:px-4 py-2.5 text-left text-xs font-semibold">সর্বনিম্ন মূল্য - হালনাগাদের সময়</th>
+                    <th class="px-3 sm:px-4 py-2.5 text-left text-xs font-semibold">সর্বোচ্চ মূল্য - হালনাগাদের সময়</th>
+                    <th class="px-3 sm:px-4 py-2.5 text-center text-xs font-semibold">সরকারি মূল্য</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
                 {% for item in recent_prices %}
                 <tr class="hover:bg-gray-50 transition">
-                    <td class="px-4 py-2.5">
+                    <td class="px-3 sm:px-4 py-2.5">
                         <span class="text-sm font-medium text-gray-800">{{ item.product.name }}</span>
                     </td>
-                    <td class="px-4 py-2.5 text-sm text-gray-500">{{ item.product_type }}</td>
-                    <td class="px-4 py-2.5">
+                    <td class="px-3 sm:px-4 py-2.5 text-sm text-gray-500">{{ item.product_type }}</td>
+                    <td class="px-3 sm:px-4 py-2.5">
                         <span class="text-sm font-medium text-green-700">{{ item.min_price|floatformat:0 }} / {{ item.product.unit }}</span>
                         <span class="text-xs text-gray-400 block">({{ item.min_market.name }}) - {{ item.min_updated_at|time:"h:i A" }}</span>
                     </td>
-                    <td class="px-4 py-2.5">
+                    <td class="px-3 sm:px-4 py-2.5">
                         <span class="text-sm font-medium text-red-600">{{ item.max_price|floatformat:0 }} / {{ item.product.unit }}</span>
                         <span class="text-xs text-gray-400 block">({{ item.max_market.name }}) - {{ item.max_updated_at|time:"h:i A" }}</span>
                     </td>
-                    <td class="px-4 py-2.5 text-center text-sm text-gray-400">
+                    <td class="px-3 sm:px-4 py-2.5 text-center text-sm text-gray-400">
                         {% if item.govt_price %}{{ item.govt_price|floatformat:0 }} / {{ item.product.unit }}{% else %}0 / {{ item.product.unit }}{% endif %}
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="5" class="px-4 py-6 text-center text-gray-400">কোনো দর পাওয়া যায়নি</td>
+                    <td colspan="5" class="px-3 py-6 text-center text-gray-400">কোনো দর পাওয়া যায়নি</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -121,22 +121,22 @@
 </div>
 
 <!-- Quick Actions -->
-<div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
-    <a href="{% url 'custom_admin:price_add' %}" class="bg-white rounded-xl border border-gray-200 p-4 text-center hover:shadow-md transition">
-        <i class="fas fa-plus-circle text-2xl text-primary-600 mb-2"></i>
-        <p class="text-sm font-medium text-gray-700">দর যোগ করুন</p>
+<div class="mt-4 sm:mt-6 grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+    <a href="{% url 'custom_admin:price_add' %}" class="bg-white rounded-xl border border-gray-200 p-3 sm:p-4 text-center hover:shadow-md transition">
+        <i class="fas fa-plus-circle text-xl sm:text-2xl text-primary-600 mb-1 sm:mb-2"></i>
+        <p class="text-xs sm:text-sm font-medium text-gray-700">দর যোগ করুন</p>
     </a>
-    <a href="{% url 'custom_admin:product_add' %}" class="bg-white rounded-xl border border-gray-200 p-4 text-center hover:shadow-md transition">
-        <i class="fas fa-box text-2xl text-blue-600 mb-2"></i>
-        <p class="text-sm font-medium text-gray-700">পণ্য যোগ করুন</p>
+    <a href="{% url 'custom_admin:product_add' %}" class="bg-white rounded-xl border border-gray-200 p-3 sm:p-4 text-center hover:shadow-md transition">
+        <i class="fas fa-box text-xl sm:text-2xl text-blue-600 mb-1 sm:mb-2"></i>
+        <p class="text-xs sm:text-sm font-medium text-gray-700">পণ্য যোগ করুন</p>
     </a>
-    <a href="{% url 'custom_admin:video_add' %}" class="bg-white rounded-xl border border-gray-200 p-4 text-center hover:shadow-md transition">
-        <i class="fab fa-youtube text-2xl text-red-600 mb-2"></i>
-        <p class="text-sm font-medium text-gray-700">ভিডিও যোগ করুন</p>
+    <a href="{% url 'custom_admin:video_add' %}" class="bg-white rounded-xl border border-gray-200 p-3 sm:p-4 text-center hover:shadow-md transition">
+        <i class="fab fa-youtube text-xl sm:text-2xl text-red-600 mb-1 sm:mb-2"></i>
+        <p class="text-xs sm:text-sm font-medium text-gray-700">ভিডিও যোগ করুন</p>
     </a>
-    <a href="{% url 'custom_admin:post_list' %}?status=pending" class="bg-white rounded-xl border border-gray-200 p-4 text-center hover:shadow-md transition">
-        <i class="fas fa-check-double text-2xl text-amber-600 mb-2"></i>
-        <p class="text-sm font-medium text-gray-700">পোস্ট অনুমোদন</p>
+    <a href="{% url 'custom_admin:post_list' %}?status=pending" class="bg-white rounded-xl border border-gray-200 p-3 sm:p-4 text-center hover:shadow-md transition">
+        <i class="fas fa-check-double text-xl sm:text-2xl text-amber-600 mb-1 sm:mb-2"></i>
+        <p class="text-xs sm:text-sm font-medium text-gray-700">পোস্ট অনুমোদন</p>
     </a>
 </div>
 {% endblock %}

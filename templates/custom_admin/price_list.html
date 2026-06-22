@@ -1,47 +1,49 @@
 {% extends "custom_admin/base.html" %}
-{% block title %}বাজার দর
-{% endblock %}
-{% block page_title %}বাজার দর ব্যবস্থাপনা
-{% endblock %}
+{% block title %}বাজার দর{% endblock %}
+{% block page_title %}বাজার দর ব্যবস্থাপনা{% endblock %}
 
 {% block content %}
-<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+<div class="flex flex-wrap items-center justify-between gap-3 mb-4 sm:mb-6">
     <div class="flex items-center gap-3">
         <input type="date" value="{{ price_date }}" onchange="window.location.href='?date='+this.value"
                class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary-500">
     </div>
-    <a href="{% url 'custom_admin:price_add' %}" class="px-4 py-2 bg-primary-600 text-white text-sm rounded-lg hover:bg-primary-700 transition">
+    <a href="{% url 'custom_admin:price_add' %}" class="px-3 sm:px-4 py-2 bg-primary-600 text-white text-sm rounded-lg hover:bg-primary-700 transition">
         <i class="fas fa-plus mr-1"></i> দর যোগ করুন
     </a>
 </div>
 
 <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
     <div class="overflow-x-auto">
-        <table class="w-full">
+        <table class="w-full min-w-[600px]">
             <thead><tr class="bg-gray-50 text-gray-600 text-xs uppercase">
-                <th class="px-4 py-3 text-left">পণ্য</th><th class="px-4 py-3 text-left">বাজার</th><th class="px-4 py-3 text-left">বিভাগ</th>
-                <th class="px-4 py-3 text-center">সর্বনিম্ন</th><th class="px-4 py-3 text-center">সর্বোচ্চ</th><th class="px-4 py-3 text-center">অ্যাকশন</th>
+                <th class="px-3 sm:px-4 py-3 text-left">পণ্য</th>
+                <th class="px-3 sm:px-4 py-3 text-left">বাজার</th>
+                <th class="px-3 sm:px-4 py-3 text-left">বিভাগ</th>
+                <th class="px-3 sm:px-4 py-3 text-center">সর্বনিম্ন</th>
+                <th class="px-3 sm:px-4 py-3 text-center">সর্বোচ্চ</th>
+                <th class="px-3 sm:px-4 py-3 text-center">অ্যাকশন</th>
             </tr></thead>
             <tbody class="divide-y divide-gray-100 text-sm">
                 {% for p in prices %}
                 <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-3 font-medium">{{ p.product.name }}</td>
-                    <td class="px-4 py-3 text-gray-500">{{ p.market.name }}</td>
-                    <td class="px-4 py-3 text-gray-400">{{ p.market.district.division.name }}</td>
-                    <td class="px-4 py-3 text-center text-green-700">৳{{ p.min_price|floatformat:0 }}</td>
-                    <td class="px-4 py-3 text-center text-red-600">৳{{ p.max_price|floatformat:0 }}</td>
-                    <td class="px-4 py-3 text-center flex items-center justify-center gap-3">
-                        <a href="{% url 'custom_admin:price_edit' p.pk %}" class="text-blue-500 hover:text-blue-700 text-xs" title="সম্পাদনা"><i class="fas fa-edit"></i></a>
+                    <td class="px-3 sm:px-4 py-3 font-medium whitespace-nowrap">{{ p.product.name }}</td>
+                    <td class="px-3 sm:px-4 py-3 text-gray-500 whitespace-nowrap">{{ p.market.name }}</td>
+                    <td class="px-3 sm:px-4 py-3 text-gray-400 whitespace-nowrap">{{ p.market.district.division.name }}</td>
+                    <td class="px-3 sm:px-4 py-3 text-center text-green-700 whitespace-nowrap">৳{{ p.min_price|floatformat:0 }}</td>
+                    <td class="px-3 sm:px-4 py-3 text-center text-red-600 whitespace-nowrap">৳{{ p.max_price|floatformat:0 }}</td>
+                    <td class="px-3 sm:px-4 py-3 text-center whitespace-nowrap">
+                        <a href="{% url 'custom_admin:price_edit' p.pk %}" class="text-blue-500 hover:text-blue-700 text-xs mr-2" title="সম্পাদনা"><i class="fas fa-edit"></i></a>
                         <a href="{% url 'custom_admin:price_delete' p.pk %}" onclick="return confirm('মুছে ফেলতে চান?')" class="text-red-500 hover:text-red-700 text-xs" title="মুছুন"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="6" class="px-4 py-8 text-center text-gray-400">এই তারিখে কোনো দর নেই</td></tr>
+                <tr><td colspan="6" class="px-3 py-8 text-center text-gray-400">এই তারিখে কোনো দর নেই</td></tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    <div class="px-4 py-2 bg-gray-50 text-xs text-gray-400 border-t">মোট {{ prices|length }} এন্ট্রি</div>
+    <div class="px-3 sm:px-4 py-2 bg-gray-50 text-xs text-gray-400 border-t">মোট {{ prices|length }} এন্ট্রি</div>
 </div>
 {% include "components/pagination.html" %}
 {% endblock %}
