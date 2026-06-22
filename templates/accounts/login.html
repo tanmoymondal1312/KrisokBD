@@ -74,6 +74,7 @@
 
             <form method="POST" class="space-y-5">
                 {% csrf_token %}
+                {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
 
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">ইউজারনেম</label>

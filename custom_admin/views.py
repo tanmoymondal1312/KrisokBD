@@ -21,8 +21,11 @@ User = get_user_model()
 def admin_required(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
-        if not request.user.is_authenticated or not request.user.is_staff:
-            return redirect('accounts:login')
+        if not request.user.is_authenticated:
+            return redirect(f'/accounts/login/?next={request.path}')
+        if not request.user.is_staff:
+            messages.error(request, 'আপনার এডমিন প্যানেলে প্রবেশের অনুমতি নেই।')
+            return redirect('core:home')
         return view_func(request, *args, **kwargs)
     return wrapper
 

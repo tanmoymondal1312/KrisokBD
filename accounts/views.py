@@ -33,7 +33,13 @@ def register_view(request):
 
 
 def login_view(request):
+    next_url = request.GET.get('next') or request.POST.get('next') or ''
+
     if request.user.is_authenticated:
+        if next_url:
+            return redirect(next_url)
+        if request.user.is_staff:
+            return redirect('custom_admin:dashboard')
         return redirect('core:home')
 
     if request.method == 'POST':
@@ -43,12 +49,15 @@ def login_view(request):
             user.check_and_update_status()
             login(request, user)
             messages.success(request, f'স্বাগতম {user.first_name or user.username}!')
-            next_url = request.GET.get('next', '/')
-            return redirect(next_url)
+            if next_url:
+                return redirect(next_url)
+            if user.is_staff:
+                return redirect('custom_admin:dashboard')
+            return redirect('core:home')
     else:
         form = LoginForm()
 
-    return render(request, 'accounts/login.html', {'form': form})
+    return render(request, 'accounts/login.html', {'form': form, 'next': next_url})
 
 
 def logout_view(request):
